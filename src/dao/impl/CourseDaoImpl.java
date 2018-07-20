@@ -3,7 +3,6 @@ package dao.impl;
 import dao.CourseDao;
 import dao.UserDao;
 import domain.Course;
-import domain.Homework;
 import domain.User;
 import util.SQLExecute;
 import util.SQLQuery;

@@ -2,7 +2,6 @@ package dao.impl;
 
 import dao.ChapterDao;
 import dao.CourseDao;
-import dao.UserDao;
 import domain.Chapter;
 import domain.Course;
 import util.SQLExecute;

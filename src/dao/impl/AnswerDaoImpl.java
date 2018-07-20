@@ -1,11 +1,8 @@
 package dao.impl;
 
 import dao.AnswerDao;
-import dao.HomeworkDao;
-import dao.PointDao;
 import dao.UserDao;
 import domain.Answer;
-import domain.Barrage;
 import domain.Homework;
 import util.SQLExecute;
 import util.SQLQuery;
