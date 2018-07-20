@@ -1,2 +1,2 @@
 # iCourseCloud
-Online Educating System Developing with Java EE
+Online Educating System Developed with Java EE
