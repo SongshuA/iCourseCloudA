@@ -3,6 +3,8 @@ package util;
 import config.JDBCConfig;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class JDBCUtil {
     private JDBCUtil() {}

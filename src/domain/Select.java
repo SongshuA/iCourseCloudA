@@ -1,20 +1,16 @@
 package domain;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-
-public class Homework implements Serializable {
+public class Select {
     private int id;
-    private String name;
-    private String context;
 
+    private User user;
     private Course course;
 
-    public Homework(int id, String name, String context, Course course) {
+    public Select(int id, User user, Course course) {
         this.id = id;
-        this.name = name;
-        this.context = context;
+        this.user = user;
         this.course = course;
     }
 
@@ -26,20 +22,12 @@ public class Homework implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public User getUser() {
+        return user;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getContext() {
-        return context;
-    }
-
-    public void setContext(String context) {
-        this.context = context;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Course getCourse() {
@@ -54,8 +42,8 @@ public class Homework implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Homework homework = (Homework) o;
-        return id == homework.id;
+        Select select = (Select) o;
+        return id == select.id;
     }
 
     @Override

@@ -1,9 +1,7 @@
 package domain;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 public class Course implements Serializable {
     private int id;
@@ -11,21 +9,14 @@ public class Course implements Serializable {
     private String description;
     private String assertFolderPath;
 
-    /* Foreign Key */
     private User creator;
-    private Set<User> members;
-    private List<Homework> homework;
-    private List<Chapter> chapters;
 
-    public Course(int id, String name, String description, String assertFolderPath, User creator, Set<User> members, List<Homework> homework, List<Chapter> chapters) {
+    public Course(int id, String name, String description, String assertFolderPath, User creator) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.assertFolderPath = assertFolderPath;
         this.creator = creator;
-        this.members = members;
-        this.homework = homework;
-        this.chapters = chapters;
     }
 
     public int getId() {
@@ -66,30 +57,6 @@ public class Course implements Serializable {
 
     public void setCreator(User creator) {
         this.creator = creator;
-    }
-
-    public Set<User> getMembers() {
-        return members;
-    }
-
-    public void setMembers(Set<User> members) {
-        this.members = members;
-    }
-
-    public List<Homework> getHomework() {
-        return homework;
-    }
-
-    public void setHomework(List<Homework> homework) {
-        this.homework = homework;
-    }
-
-    public List<Chapter> getChapters() {
-        return chapters;
-    }
-
-    public void setChapters(List<Chapter> chapters) {
-        this.chapters = chapters;
     }
 
     @Override

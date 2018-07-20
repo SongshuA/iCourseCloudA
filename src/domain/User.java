@@ -2,23 +2,16 @@ package domain;
 
 import java.io.Serializable;
 import java.util.Objects;
-import java.util.Set;
 
 public class User implements Serializable {
     private int id;
     private String username;
-    private String password;
+    private String passwordHash;
 
-    /*Foreign Key*/
-    private Set<Course> selectedCourses;
-    private Set<Course> createdCourses;
-
-    public User(int id, String username, String password, Set<Course> selectedCourses, Set<Course> createdCourses) {
+    public User(int id, String username, String passwordHash) {
         this.id = id;
         this.username = username;
-        this.password = password;
-        this.selectedCourses = selectedCourses;
-        this.createdCourses = createdCourses;
+        this.passwordHash = passwordHash;
     }
 
     public int getId() {
@@ -37,28 +30,12 @@ public class User implements Serializable {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPasswordHash() {
+        return passwordHash;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Set<Course> getSelectedCourses() {
-        return selectedCourses;
-    }
-
-    public void setSelectedCourses(Set<Course> selectedCourses) {
-        this.selectedCourses = selectedCourses;
-    }
-
-    public Set<Course> getCreatedCourses() {
-        return createdCourses;
-    }
-
-    public void setCreatedCourses(Set<Course> createdCourses) {
-        this.createdCourses = createdCourses;
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
     }
 
     @Override
