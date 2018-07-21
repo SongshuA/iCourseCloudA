@@ -6,8 +6,8 @@ import dao.UserDao;
 import domain.Course;
 import domain.Select;
 import domain.User;
-import util.SQLExecute;
-import util.SQLQuery;
+import util.JDBCTools.SQLExecute;
+import util.JDBCTools.SQLQuery;
 
 import java.util.List;
 
@@ -24,10 +24,11 @@ public class SelectDaoImpl implements SelectDao {
 
     @Override
     public boolean create(Select select) {
-        SQLExecute execute = new SQLExecute("INSERT INTO select (userId, courseId) VALUES(?, ?)", statement -> {
+        SQLExecute execute = new SQLExecute("INSERT INTO `select` (userId, courseId) VALUES(?, ?)", statement -> {
             statement.setInt(1, select.getUser().getId());
             statement.setInt(2, select.getCourse().getId());
         });
+
         boolean result = execute.run();
         execute.free();
         return result;
@@ -36,7 +37,7 @@ public class SelectDaoImpl implements SelectDao {
     @Override
     public List<Select> getByUser(User user) {
         final CourseDao courseDao = CourseDao.getInstance();
-        SQLQuery<Select> query = new SQLQuery<>("SELECT * FROM select WHERE userId = ?", statement -> {
+        SQLQuery<Select> query = new SQLQuery<>("SELECT * FROM `select` WHERE userId = ?", statement -> {
             statement.setInt(1, user.getId());
         }, (rs, list) -> {
             while(rs.next()){

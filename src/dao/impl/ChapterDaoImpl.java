@@ -4,8 +4,8 @@ import dao.ChapterDao;
 import dao.CourseDao;
 import domain.Chapter;
 import domain.Course;
-import util.SQLExecute;
-import util.SQLQuery;
+import util.JDBCTools.SQLExecute;
+import util.JDBCTools.SQLQuery;
 
 import java.util.List;
 

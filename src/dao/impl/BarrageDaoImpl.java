@@ -5,8 +5,8 @@ import dao.PointDao;
 import dao.UserDao;
 import domain.Barrage;
 import domain.Point;
-import util.SQLExecute;
-import util.SQLQuery;
+import util.JDBCTools.SQLExecute;
+import util.JDBCTools.SQLQuery;
 
 import java.util.List;
 

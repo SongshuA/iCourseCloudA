@@ -4,8 +4,8 @@ import dao.CourseDao;
 import dao.UserDao;
 import domain.Course;
 import domain.User;
-import util.SQLExecute;
-import util.SQLQuery;
+import util.JDBCTools.SQLExecute;
+import util.JDBCTools.SQLQuery;
 
 import java.util.List;
 
@@ -60,6 +60,24 @@ public class CourseDaoImpl implements CourseDao {
             while(rs.next())
                 list.add(new Course(rs.getInt("id"), rs.getString("name"), rs.getString("description"),
                         rs.getString("assertFolderPath"), creator));
+        });
+
+        List<Course> list = query.run();
+        query.free();
+        return list;
+    }
+
+    @Override
+    public List<Course> getAll() {
+        UserDao userDao = UserDao.getInstance();
+
+        SQLQuery<Course> query = new SQLQuery<>("SELECT * FROM course", null, (rs, list) -> {
+            while(rs.next())
+                list.add(new Course(rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("description"),
+                        rs.getString("assertFolderPath"),
+                        userDao.getById(rs.getInt("creatorId"))));
         });
 
         List<Course> list = query.run();

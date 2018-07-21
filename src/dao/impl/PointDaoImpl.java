@@ -4,8 +4,8 @@ import dao.ChapterDao;
 import dao.PointDao;
 import domain.Chapter;
 import domain.Point;
-import util.SQLExecute;
-import util.SQLQuery;
+import util.JDBCTools.SQLExecute;
+import util.JDBCTools.SQLQuery;
 
 import java.util.List;
 

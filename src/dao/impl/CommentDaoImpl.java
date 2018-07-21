@@ -4,8 +4,8 @@ import dao.CommentDao;
 import dao.UserDao;
 import domain.Comment;
 import domain.Course;
-import util.SQLExecute;
-import util.SQLQuery;
+import util.JDBCTools.SQLExecute;
+import util.JDBCTools.SQLQuery;
 
 import java.util.List;
 

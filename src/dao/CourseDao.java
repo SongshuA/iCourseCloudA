@@ -14,4 +14,6 @@ public interface CourseDao {
     Course getById(int id);
 
     List<Course> getByCreator(User creator);
+
+    List<Course> getAll();
 }

@@ -2,8 +2,8 @@ package dao.impl;
 
 import dao.UserDao;
 import domain.User;
-import util.SQLExecute;
-import util.SQLQuery;
+import util.JDBCTools.SQLExecute;
+import util.JDBCTools.SQLQuery;
 
 import java.util.List;
 

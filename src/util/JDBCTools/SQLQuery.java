@@ -1,6 +1,6 @@
-package util;
+package util.JDBCTools;
 
-import com.sun.javafx.tools.packager.Param;
+import util.JDBCUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
