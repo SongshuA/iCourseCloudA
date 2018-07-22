@@ -10,7 +10,7 @@ import java.util.List;
 public interface AnswerDao {
     static AnswerDao getInstance(){ return AnswerDaoImpl.getInstance(); }
 
-    boolean create(Answer answer);
+    int create(Answer answer);
 
     List<Answer> getByHomework(Homework homework);
 

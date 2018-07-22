@@ -11,5 +11,5 @@ public interface CommentService {
 
     List<Comment> getComments(int courseId) throws ServiceException;
 
-    void createComment(String context, String username, int courseId) throws ServiceException;
+    int createComment(String context, String username, int courseId) throws ServiceException;
 }

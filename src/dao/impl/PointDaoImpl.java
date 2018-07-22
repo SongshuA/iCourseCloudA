@@ -21,18 +21,14 @@ public class PointDaoImpl implements PointDao {
     }
 
     @Override
-    public boolean create(Point point) {
-        SQLExecute execute = new SQLExecute("INSERT INTO point (name, description, videoFolderPath, documentFolderPath, chapterId) VALUES(?, ?, ?, ?, ?)", statement -> {
+    public int create(Point point) {
+        SQLExecute execute = new SQLExecute("INSERT INTO point (name, description, chapterId) VALUES(?, ?, ?)", statement -> {
             statement.setString(1, point.getName());
             statement.setString(2, point.getDescription());
-            statement.setString(3, point.getVideoFolderPath());
-            statement.setString(4, point.getDocumentFolderPath());
-            statement.setInt(5, point.getChapter().getId());
+            statement.setInt(3, point.getChapter().getId());
         });
 
-        boolean result = execute.run();
-        execute.free();
-        return result;
+        return execute.run();
     }
 
     @Override
@@ -42,23 +38,24 @@ public class PointDaoImpl implements PointDao {
 
         SQLQuery<Point> query = new SQLQuery<>("SELECT * FROM point WHERE id = ?", statement -> statement.setInt(1, id), (rs, list) -> {
             if(rs.next())
-                list.add(new Point(id, rs.getString("name"),
-                        rs.getString("description"),
-                        rs.getString("videoFolderPath"),
-                        rs.getString("documentFolderPath"),
-                        chapterDao.getById(rs.getInt("id"))));
+                list.add(new Point(id, rs.getString("name"), rs.getString("description"), chapterDao.getById(rs.getInt("id"))));
         });
 
         List<Point> list = query.run();
         if(list.size() > 0)
             user = list.get(0);
 
-        query.free();
         return user;
     }
 
     @Override
     public List<Point> getByChapter(Chapter chapter) {
-        return null;
+        SQLQuery<Point> query = new SQLQuery<>("SELECT * FROM point WHERE chapterId = ?", statement -> statement.setInt(1, chapter.getId()), (rs, list) -> {
+            while(rs.next())
+                list.add(new Point(rs.getInt("id"), rs.getString("name"),
+                        rs.getString("description"), chapter));
+        });
+
+        return query.run();
     }
 }

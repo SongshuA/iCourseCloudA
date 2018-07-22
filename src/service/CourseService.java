@@ -12,9 +12,15 @@ public interface CourseService {
 
     List<Course> getAllCourse();
 
-    void createCourse(String creatorUsername, String name, String description, String assertFolderPath) throws ServiceException;
+    int createCourse(String creatorUsername, String name, String description) throws ServiceException;
 
     void selectCourse(String username, int courseId) throws ServiceException;
+
+    String getResourceFolderURL(int courseId);
+
+    List<String> getListOfResourceFilename(int courseId);
+
+    String getCoverURL(int courseId);
 
     List<Course> getSelectedCourses(String username) throws ServiceException;
 

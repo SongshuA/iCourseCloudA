@@ -1,0 +1,12 @@
+body{
+    background-color: #5f7c8c;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.page-container{
+    width: 700px;
+    margin: 60px auto 60px auto;
+    background-color: white;
+}

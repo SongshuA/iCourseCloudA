@@ -40,7 +40,7 @@ public class CommentServiceImpl implements CommentService {
 
 
     @Override
-    public void createComment(String context, String username, int courseId) throws ServiceException {
+    public int createComment(String context, String username, int courseId) throws ServiceException {
         Course course = CourseService.getInstance().getCourseById(courseId);
         User user = UserService.getInstance().queryUser(username);
 
@@ -50,6 +50,6 @@ public class CommentServiceImpl implements CommentService {
         if(user == null)
             throw new ServiceException("评论的对应的用户不存在");
 
-        commentDao.create(new Comment(0,context,user,course));
+        return commentDao.create(new Comment(0,context,user,course));
     }
 }

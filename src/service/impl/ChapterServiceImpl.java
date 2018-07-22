@@ -38,13 +38,13 @@ public class ChapterServiceImpl implements ChapterService {
 
 
     @Override
-    public void createChapter(String name, int courseId) throws ServiceException {
+    public int createChapter(String name, int courseId) throws ServiceException {
         Course course = CourseService.getInstance().getCourseById(courseId);
 
         if(course == null)
             throw new ServiceException("章节对应的课程不存在！");
 
-        chapterDao.create(new Chapter(0, name, course));
+        return chapterDao.create(new Chapter(0, name, course));
 
     }
 

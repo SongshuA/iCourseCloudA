@@ -33,7 +33,6 @@ public class UserDaoImpl implements UserDao {
         if(list.size() > 0)
             user = list.get(0);
 
-        query.free();
         return user;
     }
 
@@ -49,19 +48,16 @@ public class UserDaoImpl implements UserDao {
         List<User> list = query.run();
         if(list.size() > 0)
             user = list.get(0);
-
-        query.free();
         return user;
     }
 
     @Override
-    public boolean create(User user) {
+    public int create(User user) {
         SQLExecute execute = new SQLExecute("INSERT INTO user (username, passwordHash) VALUES(?, ?)", statement -> {
             statement.setString(1, user.getUsername());
             statement.setString(2, user.getPasswordHash());
         });
-        boolean result = execute.run();
-        execute.free();
-        return result;
+
+        return execute.run();
     }
 }

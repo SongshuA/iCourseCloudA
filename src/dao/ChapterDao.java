@@ -9,7 +9,7 @@ import java.util.List;
 public interface ChapterDao {
     static ChapterDao getInstance(){ return ChapterDaoImpl.getInstance(); }
 
-    boolean create(Chapter chapter);
+    int create(Chapter chapter);
 
     Chapter getById(int id);
 

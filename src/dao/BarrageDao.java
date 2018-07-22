@@ -9,7 +9,7 @@ import java.util.List;
 public interface BarrageDao {
     static BarrageDao getInstance(){ return BarrageDaoImpl.getInstance(); }
 
-    boolean create(Barrage barrage);
+    int create(Barrage barrage);
 
     List<Barrage> getByPoint(Point point);
 }

@@ -21,16 +21,14 @@ public class HomeworkDaoImpl implements HomeworkDao {
     }
 
     @Override
-    public boolean create(Homework homework) {
+    public int create(Homework homework) {
         SQLExecute execute = new SQLExecute("INSERT INTO homework (name, context, courseId) VALUES(?, ?, ?)", statement -> {
             statement.setString(1, homework.getName());
             statement.setString(2, homework.getContext());
             statement.setInt(3, homework.getCourse().getId());
         });
 
-        boolean result = execute.run();
-        execute.free();
-        return result;
+        return execute.run();
     }
 
     @Override
@@ -48,7 +46,6 @@ public class HomeworkDaoImpl implements HomeworkDao {
         if(list.size() > 0)
             homework = list.get(0);
 
-        query.free();
         return homework;
     }
 
@@ -59,8 +56,6 @@ public class HomeworkDaoImpl implements HomeworkDao {
                 list.add(new Homework(rs.getInt("id"), rs.getString("name"), rs.getString("context"), course));
         });
 
-        List<Homework> list = query.run();
-        query.free();
-        return list;
+        return query.run();
     }
 }

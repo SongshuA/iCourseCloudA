@@ -2,9 +2,7 @@ package util.JDBCTools;
 
 import util.JDBCUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class SQLExecute {
     private String sql;
@@ -20,22 +18,31 @@ public class SQLExecute {
         statement = null;
     }
 
-    public boolean run() {
+    public int run() {
+        int result = 0;
+
         try{
             conn = JDBCUtil.getConnection();
-            statement = conn.prepareStatement(sql);
+            statement = conn.prepareStatement(sql , Statement.RETURN_GENERATED_KEYS);
             if(setter != null)
                 setter.run(statement);
-            return statement.execute();
+            statement.execute();
+            ResultSet rs = statement.getGeneratedKeys();
+
+            if(rs != null && rs.next())
+                result = rs.getInt(1);
 
         } catch (SQLException e) {
-            free();
             e.printStackTrace();
+
+        }finally {
+            free();
         }
-        return false;
+
+        return result;
     }
 
-    public void free(){
+    private void free(){
         JDBCUtil.free(null, statement, conn);
         statement = null;
         conn = null;

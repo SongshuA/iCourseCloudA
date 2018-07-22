@@ -9,7 +9,7 @@ import java.util.List;
 public interface CommentDao {
     static CommentDao getInstance(){ return CommentDaoImpl.getInstance(); }
 
-    boolean create(Comment comment);
+    int create(Comment comment);
 
     List<Comment> getByCourse(Course course);
 }

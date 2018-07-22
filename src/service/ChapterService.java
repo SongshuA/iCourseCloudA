@@ -11,7 +11,7 @@ public interface ChapterService {
 
     List<Chapter> getChapters(int courseId) throws ServiceException;
 
-    void createChapter(String name, int courseId) throws ServiceException;
+    int createChapter(String name, int courseId) throws ServiceException;
 
     Chapter getChapterById(int id);
 }

@@ -9,5 +9,5 @@ public interface AnswerService {
 
     Answer getAnswer(String username, int homeworkId);
 
-    void createAnswer(String context, String username, int homeworkId) throws ServiceException;
+    int createAnswer(String context, String username, int homeworkId) throws ServiceException;
 }

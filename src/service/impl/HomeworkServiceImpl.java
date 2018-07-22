@@ -43,14 +43,12 @@ public class HomeworkServiceImpl implements HomeworkService {
 
 
     @Override
-    public void createHomework(String name, String context, int courseId) throws ServiceException {
+    public int createHomework(String name, String context, int courseId) throws ServiceException {
         Course course = CourseService.getInstance().getCourseById(courseId);
 
         if(course == null)
             throw new ServiceException("作业对应的课程不存在");
 
-        if(!homeworkDao.create(new Homework(0, name,context, course)))
-            throw new ServiceException("数据库访问失败");
-
+        return homeworkDao.create(new Homework(0, name,context, course));
     }
 }

@@ -1,0 +1,23 @@
+.nav-wrapper{
+    padding-left: 20px;
+}
+
+.page-container{
+    padding: 20px 20px;
+    flex: 1 0 auto;
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+.error-display{
+    font-size: 13pt;
+    background-color: #eee;
+    border: 1px solid #ddd;
+    padding: 10px 0;
+    color: #9e391f;
+    display: none;
+}

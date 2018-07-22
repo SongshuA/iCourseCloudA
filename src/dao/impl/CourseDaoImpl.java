@@ -21,17 +21,14 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
-    public boolean create(Course course) {
-        SQLExecute execute = new SQLExecute("INSERT INTO course (name, description, assertFolderPath, creatorId) VALUES(?, ?, ?, ?)", statement -> {
+    public int create(Course course) {
+        SQLExecute execute = new SQLExecute("INSERT INTO course (name, description, creatorId) VALUES(?, ?, ?)", statement -> {
             statement.setString(1, course.getName());
             statement.setString(2, course.getDescription());
-            statement.setString(3, course.getAssertFolderPath());
-            statement.setInt(4, course.getCreator().getId());
+            statement.setInt(3, course.getCreator().getId());
         });
 
-        boolean result = execute.run();
-        execute.free();
-        return result;
+        return execute.run();
     }
 
     @Override
@@ -41,15 +38,13 @@ public class CourseDaoImpl implements CourseDao {
 
         SQLQuery<Course> query = new SQLQuery<>("SELECT * FROM course WHERE id = ?", statement -> statement.setInt(1, id), (rs, list) -> {
             if(rs.next())
-                list.add(new Course(id, rs.getString("name"), rs.getString("description"),
-                         rs.getString("assertFolderPath"), userDao.getById(rs.getInt("creatorId"))));
+                list.add(new Course(id, rs.getString("name"), rs.getString("description"), userDao.getById(rs.getInt("creatorId"))));
         });
 
         List<Course> list = query.run();
         if(list.size() > 0)
             course = list.get(0);
 
-        query.free();
         return course;
     }
 
@@ -58,13 +53,10 @@ public class CourseDaoImpl implements CourseDao {
 
         SQLQuery<Course> query = new SQLQuery<>("SELECT * FROM course WHERE creatorId = ?", statement -> statement.setInt(1, creator.getId()), (rs, list) -> {
             while(rs.next())
-                list.add(new Course(rs.getInt("id"), rs.getString("name"), rs.getString("description"),
-                        rs.getString("assertFolderPath"), creator));
+                list.add(new Course(rs.getInt("id"), rs.getString("name"), rs.getString("description"), creator));
         });
 
-        List<Course> list = query.run();
-        query.free();
-        return list;
+        return query.run();
     }
 
     @Override
@@ -76,12 +68,9 @@ public class CourseDaoImpl implements CourseDao {
                 list.add(new Course(rs.getInt("id"),
                         rs.getString("name"),
                         rs.getString("description"),
-                        rs.getString("assertFolderPath"),
                         userDao.getById(rs.getInt("creatorId"))));
         });
 
-        List<Course> list = query.run();
-        query.free();
-        return list;
+        return query.run();
     }
 }

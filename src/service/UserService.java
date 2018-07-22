@@ -9,6 +9,8 @@ public interface UserService {
 
     User queryUser(String username);
 
+    User getUserById(int id);
+
     int register(String username, String password) throws ServiceException;
 
     void authorize(String username, String password) throws ServiceException;

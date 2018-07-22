@@ -23,15 +23,13 @@ public class SelectDaoImpl implements SelectDao {
     }
 
     @Override
-    public boolean create(Select select) {
+    public int create(Select select) {
         SQLExecute execute = new SQLExecute("INSERT INTO `select` (userId, courseId) VALUES(?, ?)", statement -> {
             statement.setInt(1, select.getUser().getId());
             statement.setInt(2, select.getCourse().getId());
         });
 
-        boolean result = execute.run();
-        execute.free();
-        return result;
+        return execute.run();
     }
 
     @Override
@@ -46,9 +44,8 @@ public class SelectDaoImpl implements SelectDao {
                 list.add(new Select(id, user, course));
             }
         });
-        List<Select> list = query.run();
-        query.free();
-        return list;
+
+        return query.run();
     }
 
     @Override
@@ -63,8 +60,7 @@ public class SelectDaoImpl implements SelectDao {
                 list.add(new Select(id, user, course));
             }
         });
-        List<Select> list = query.run();
-        query.free();
-        return list;
+
+        return query.run();
     }
 }

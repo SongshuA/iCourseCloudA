@@ -21,15 +21,13 @@ public class ChapterDaoImpl implements ChapterDao {
     }
 
     @Override
-    public boolean create(Chapter chapter) {
+    public int create(Chapter chapter) {
         SQLExecute execute = new SQLExecute("INSERT INTO chapter (name, courseId) VALUES(?, ?)", statement -> {
             statement.setString(1, chapter.getName());
             statement.setInt(2, chapter.getCourse().getId());
         });
 
-        boolean result = execute.run();
-        execute.free();
-        return result;
+        return execute.run();
     }
 
     @Override
@@ -46,7 +44,6 @@ public class ChapterDaoImpl implements ChapterDao {
         if(list.size() > 0)
             chapter = list.get(0);
 
-        query.free();
         return chapter;
     }
 
@@ -60,8 +57,6 @@ public class ChapterDaoImpl implements ChapterDao {
                 list.add(new Chapter(rs.getInt("id"), rs.getString("name"), courseDao.getById(rs.getInt("id"))));
         });
 
-        List<Chapter> list = query.run();
-        query.free();
-        return list;
+        return query.run();
     }
 }

@@ -1,5 +1,6 @@
 package service.impl;
 
+import config.GlobalConfig;
 import dao.CourseDao;
 import dao.SelectDao;
 import domain.Course;
@@ -8,6 +9,7 @@ import domain.User;
 import exception.ServiceException;
 import service.CourseService;
 import service.UserService;
+import util.FileUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,15 +38,14 @@ public class CourseServiceImpl implements CourseService {
 
 
     @Override
-    public void createCourse(String creatorUsername, String name, String description, String assertFolderPath) throws ServiceException {
+    public int createCourse(String creatorUsername, String name, String description) throws ServiceException {
         User creator = UserService.getInstance().queryUser(creatorUsername);
         if(creator == null)
             throw new ServiceException("课程对应的创建者用户不存在");
 
-        Course course = new Course(0,name, description, assertFolderPath, creator);
+        Course course = new Course(0,name, description, creator);
 
-        if(!courseDao.create(course))
-            throw new ServiceException("数据库访问失败");
+        return courseDao.create(course);
 
     }
 
@@ -67,6 +68,38 @@ public class CourseServiceImpl implements CourseService {
             throw new ServiceException("该用户已经选择此课程");
 
         selectDao.create(new Select(0, user, course));
+    }
+
+    @Override
+    public String getResourceFolderURL(int courseId) {
+        return String.format("/asserts/course/%d/resource/", courseId);
+    }
+
+    @Override
+    public List<String> getListOfResourceFilename(int courseId) {
+        return FileUtil.walkThroughFolder(String.format("%s/course/%d/resource", GlobalConfig.assertPath, courseId));
+    }
+
+    @Override
+    public String getCoverURL(int courseId) {
+        List<String> list = FileUtil.walkThroughFolder(String.format("%s/course/%d/cover", GlobalConfig.assertPath, courseId));
+
+        String filename = null;
+
+        if(list != null){
+
+            for(String item : list){
+                String ext = item.substring(item.lastIndexOf(".") + 1).toLowerCase();
+                if(ext.equals("jpg") || ext.equals("png"))
+                    filename = String.format("/asserts/course/%d/cover/%s", courseId, item);
+            }
+
+        }
+
+        if(filename == null)
+            return GlobalConfig.defaultCourseIcon;
+        else
+            return filename;
     }
 
 

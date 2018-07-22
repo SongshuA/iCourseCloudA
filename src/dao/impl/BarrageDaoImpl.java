@@ -22,7 +22,7 @@ public class BarrageDaoImpl implements BarrageDao {
     }
 
     @Override
-    public boolean create(Barrage barrage) {
+    public int create(Barrage barrage) {
         SQLExecute execute = new SQLExecute("INSERT INTO barrage (context, time, userId, pointId) VALUES(?, ?, ?, ?)", statement -> {
             statement.setString(1, barrage.getContext());
             statement.setInt(2, barrage.getTime());
@@ -30,9 +30,7 @@ public class BarrageDaoImpl implements BarrageDao {
             statement.setInt(4, barrage.getPoint().getId());
         });
 
-        boolean result = execute.run();
-        execute.free();
-        return result;
+        return execute.run();
     }
 
     @Override
@@ -46,8 +44,6 @@ public class BarrageDaoImpl implements BarrageDao {
                         userDao.getById(rs.getInt("userId")), pointDao.getById(rs.getInt("pointId"))));
         });
 
-        List<Barrage> list = query.run();
-        query.free();
-        return list;
+        return query.run();
     }
 }

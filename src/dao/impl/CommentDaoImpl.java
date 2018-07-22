@@ -21,16 +21,14 @@ public class CommentDaoImpl implements CommentDao {
     }
 
     @Override
-    public boolean create(Comment comment) {
+    public int create(Comment comment) {
         SQLExecute execute = new SQLExecute("INSERT INTO comment (context, userId, courseId) VALUES(?, ?, ?)", statement -> {
             statement.setString(1, comment.getContext());
             statement.setInt(2, comment.getUser().getId());
             statement.setInt(3, comment.getCourse().getId());
         });
 
-        boolean result = execute.run();
-        execute.free();
-        return result;
+        return execute.run();
     }
 
     @Override
@@ -43,8 +41,6 @@ public class CommentDaoImpl implements CommentDao {
                         userDao.getById(rs.getInt("id")), course));
         });
 
-        List<Comment> list = query.run();
-        query.free();
-        return list;
+        return query.run();
     }
 }

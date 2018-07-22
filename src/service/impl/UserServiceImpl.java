@@ -23,7 +23,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User queryUser(String username) {
+        if(username == null)
+            return null;
+
         return userDao.getByUsername(username);
+    }
+
+
+    @Override
+    public User getUserById(int id) {
+        return userDao.getById(id);
     }
 
 
@@ -33,9 +42,8 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException("用户已经存在");
 
         User user = new User(0, username, password);
-        userDao.create(user);
 
-        return (userDao.getByUsername(username).getId());
+        return userDao.create(user);
     }
 
 

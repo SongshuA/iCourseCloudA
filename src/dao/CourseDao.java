@@ -9,7 +9,7 @@ import java.util.List;
 public interface CourseDao {
     static CourseDao getInstance(){ return CourseDaoImpl.getInstance(); }
 
-    boolean create(Course course);
+    int create(Course course);
 
     Course getById(int id);
 

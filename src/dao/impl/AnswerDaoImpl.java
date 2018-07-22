@@ -22,7 +22,7 @@ public class AnswerDaoImpl implements AnswerDao {
     }
 
     @Override
-    public boolean create(Answer answer) {
+    public int create(Answer answer) {
 
         SQLExecute execute = new SQLExecute("INSERT INTO answer (context, userId, homeworkId) VALUES(?, ?, ?)", statement -> {
             statement.setString(1, answer.getContext());
@@ -30,9 +30,7 @@ public class AnswerDaoImpl implements AnswerDao {
             statement.setInt(3, answer.getHomework().getId());
         });
 
-        boolean result = execute.run();
-        execute.free();
-        return result;
+        return execute.run();
     }
 
     @Override
@@ -45,9 +43,7 @@ public class AnswerDaoImpl implements AnswerDao {
                         userDao.getById(rs.getInt("userId")), homework));
         });
 
-        List<Answer> list = query.run();
-        query.free();
-        return list;
+        return query.run();
     }
 
     @Override
@@ -68,7 +64,6 @@ public class AnswerDaoImpl implements AnswerDao {
         if(list.size() > 0)
             answer = list.get(0);
 
-        query.free();
         return answer;
     }
 }

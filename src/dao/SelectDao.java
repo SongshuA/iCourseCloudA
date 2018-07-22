@@ -10,7 +10,7 @@ import java.util.List;
 public interface SelectDao {
     static SelectDao getInstance(){ return SelectDaoImpl.getInstance(); }
 
-    boolean create(Select select);
+    int create(Select select);
 
     List<Select> getByUser(User user);
 

@@ -7,15 +7,13 @@ public class Course implements Serializable {
     private int id;
     private String name;
     private String description;
-    private String assertFolderPath;
 
     private User creator;
 
-    public Course(int id, String name, String description, String assertFolderPath, User creator) {
+    public Course(int id, String name, String description, User creator) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.assertFolderPath = assertFolderPath;
         this.creator = creator;
     }
 
@@ -41,14 +39,6 @@ public class Course implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getAssertFolderPath() {
-        return assertFolderPath;
-    }
-
-    public void setAssertFolderPath(String assertFolderPath) {
-        this.assertFolderPath = assertFolderPath;
     }
 
     public User getCreator() {

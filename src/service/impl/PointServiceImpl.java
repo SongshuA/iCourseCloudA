@@ -1,5 +1,6 @@
 package service.impl;
 
+import config.GlobalConfig;
 import dao.PointDao;
 import domain.Chapter;
 import domain.Point;
@@ -26,13 +27,13 @@ public class PointServiceImpl implements PointService {
     }
 
     @Override
-    public void createPoint(String name, String description, String videoFolderPath, String documentFolderPath, int chapterId) throws ServiceException {
+    public int createPoint(String name, String description, int chapterId) throws ServiceException {
         Chapter chapter = ChapterService.getInstance().getChapterById(chapterId);
 
         if(chapter == null)
             throw new ServiceException("知识点对应的章节不存在");
 
-        pointDao.create(new Point(0, name, description, videoFolderPath, documentFolderPath, chapter));
+        return pointDao.create(new Point(0, name, description, chapter));
     }
 
 
@@ -47,14 +48,26 @@ public class PointServiceImpl implements PointService {
     }
 
     @Override
-    public List<String> getListOfVideoPath(String videoFolderPath) {
-        return FileUtil.walkThroughFolder(videoFolderPath);
+    public String getVideoFolderURL(int pointId) {
+        return String.format("/asserts/point/%d/video/", pointId);
     }
 
     @Override
-    public List<String> getListOfDocumentPath(String documentFolderPath) {
-        return FileUtil.walkThroughFolder(documentFolderPath);
+    public String getDocumentFolderURL(int pointId) {
+        return String.format("/asserts/point/%d/document/", pointId);
     }
+
+
+    @Override
+    public List<String> getListOfVideoFilename(int pointId) {
+        return FileUtil.walkThroughFolder(String.format("%s/point/%d/video", GlobalConfig.assertPath, pointId));
+    }
+
+    @Override
+    public List<String> getListOfDocumentFilename(int pointId) {
+        return FileUtil.walkThroughFolder(String.format("%s/point/%d/document", GlobalConfig.assertPath, pointId));
+    }
+
 
     @Override
     public Point getPointById(int id) {

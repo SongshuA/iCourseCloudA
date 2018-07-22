@@ -41,14 +41,16 @@ public class SQLQuery<T> {
 
 
         } catch (SQLException e) {
-            free();
             e.printStackTrace();
+
+        }finally {
+            free();
         }
 
         return list;
     }
 
-    public void free(){
+    private void free(){
         JDBCUtil.free(rs, statement, conn);
         rs = null;
         statement = null;

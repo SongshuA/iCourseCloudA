@@ -10,5 +10,5 @@ public interface UserDao {
 
     User getByUsername(String username);
 
-    boolean create(User user);
+    int create(User user);
 }

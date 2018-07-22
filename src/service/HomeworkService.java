@@ -13,5 +13,5 @@ public interface HomeworkService {
 
     Homework getHomeworkById(int id);
 
-    void createHomework(String name, String context, int courseId) throws ServiceException;
+    int createHomework(String name, String context, int courseId) throws ServiceException;
 }

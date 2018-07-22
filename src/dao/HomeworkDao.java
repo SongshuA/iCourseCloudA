@@ -9,7 +9,7 @@ import java.util.List;
 public interface HomeworkDao {
     static HomeworkDao getInstance(){ return HomeworkDaoImpl.getInstance(); }
 
-    boolean create(Homework homework);
+    int create(Homework homework);
 
     Homework getById(int id);
 

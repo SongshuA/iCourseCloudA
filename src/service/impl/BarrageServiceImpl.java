@@ -40,7 +40,7 @@ public class BarrageServiceImpl implements BarrageService {
 
 
     @Override
-    public void createBarrage(String context, int time, String username, int pointId) throws ServiceException {
+    public int createBarrage(String context, int time, String username, int pointId) throws ServiceException {
         Point point = PointService.getInstance().getPointById(pointId);
         User user = UserService.getInstance().queryUser(username);
 
@@ -50,6 +50,6 @@ public class BarrageServiceImpl implements BarrageService {
         if(user == null)
             throw new ServiceException("弹幕对应的用户不存在");
 
-        barrageDao.create(new Barrage(0, context, time, user, point));
+        return barrageDao.create(new Barrage(0, context, time, user, point));
     }
 }

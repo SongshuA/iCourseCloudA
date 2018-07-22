@@ -11,5 +11,5 @@ public interface BarrageService {
 
     List<Barrage> getBarrages(int pointId) throws ServiceException;
 
-    void createBarrage(String context, int time, String username, int pointId) throws ServiceException;
+    int createBarrage(String context, int time, String username, int pointId) throws ServiceException;
 }

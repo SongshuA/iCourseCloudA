@@ -37,7 +37,7 @@ public class AnswerServiceImpl implements AnswerService {
 
 
     @Override
-    public void createAnswer(String context, String username, int homeworkId) throws ServiceException {
+    public int createAnswer(String context, String username, int homeworkId) throws ServiceException {
         if(getAnswer(username, homeworkId) != null)
             throw new ServiceException("该用户已发表过对应作业的答案");
 
@@ -52,6 +52,6 @@ public class AnswerServiceImpl implements AnswerService {
 
         Answer answer = new Answer(0, context, 0, user, homework);
 
-        answerDao.create(answer);
+        return answerDao.create(answer);
     }
 }
