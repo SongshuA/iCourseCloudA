@@ -18,6 +18,8 @@ public interface CourseService {
 
     String getResourceFolderURL(int courseId);
 
+    String getResourceFolderLocalPath(int courseId);
+
     List<String> getListOfResourceFilename(int courseId);
 
     String getCoverURL(int courseId);

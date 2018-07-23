@@ -21,7 +21,7 @@ public interface FileUtil {
         File[] fs = file.listFiles();
 
         if(fs == null)
-            return null;
+            return new ArrayList<>();
 
         List<String> files = new ArrayList<>();
 
@@ -67,7 +67,7 @@ public interface FileUtil {
     }
 
 
-    static boolean uploadFile(List<FileItem> fileItems, String localDir, String fieldName){
+    static boolean uploadFile(List<FileItem> fileItems, String localDir, String fieldName, String storeFilename){
         if(fileItems == null)
             return false;
 
@@ -78,11 +78,7 @@ public interface FileUtil {
         try {
             for(FileItem fileItem : fileItems){
                 if(!fileItem.isFormField() && fieldName.equals(fileItem.getFieldName())){
-                    String fileName = new File(fileItem.getName()).getName();
-                    String extName = fileName.substring(fileName.lastIndexOf(".") + 1);
-                    fileName = System.currentTimeMillis() + "." + extName;
-
-                    File storeFile = new File(localDir + File.separator + fileName);
+                    File storeFile = new File(localDir + File.separator + storeFilename);
                     fileItem.write(storeFile);
                     return true;
                 }

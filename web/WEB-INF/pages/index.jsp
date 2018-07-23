@@ -6,13 +6,15 @@
 <html>
 <head>
     <title>主页 - <%=GlobalConfig.siteName%></title>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/icon.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/materialize.min.css" media="screen,projection">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/main.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/index.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body>
 <jsp:include page="components/navbar.jsp" />
+
 
 <%
     List<Course> hotCourses = (List<Course>)request.getAttribute("hottest");

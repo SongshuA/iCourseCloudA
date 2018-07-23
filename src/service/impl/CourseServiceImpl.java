@@ -11,6 +11,7 @@ import service.CourseService;
 import service.UserService;
 import util.FileUtil;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,30 +77,26 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    public String getResourceFolderLocalPath(int courseId) {
+        return String.format("%s/course/%d/resource", GlobalConfig.assertPath, courseId);
+    }
+
+    @Override
     public List<String> getListOfResourceFilename(int courseId) {
-        return FileUtil.walkThroughFolder(String.format("%s/course/%d/resource", GlobalConfig.assertPath, courseId));
+        return FileUtil.walkThroughFolder(getResourceFolderLocalPath(courseId));
     }
 
     @Override
     public String getCoverURL(int courseId) {
-        List<String> list = FileUtil.walkThroughFolder(String.format("%s/course/%d/cover", GlobalConfig.assertPath, courseId));
+        String localPath = String.format("%s/course/%d/cover", GlobalConfig.assertPath, courseId);
+        String url = String.format("/asserts/course/%d/cover", courseId);
 
-        String filename = null;
+        File file = new File(localPath);
 
-        if(list != null){
-
-            for(String item : list){
-                String ext = item.substring(item.lastIndexOf(".") + 1).toLowerCase();
-                if(ext.equals("jpg") || ext.equals("png"))
-                    filename = String.format("/asserts/course/%d/cover/%s", courseId, item);
-            }
-
-        }
-
-        if(filename == null)
+        if(!file.exists())
             return GlobalConfig.defaultCourseIcon;
         else
-            return filename;
+            return url;
     }
 
 

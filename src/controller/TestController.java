@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -29,13 +30,15 @@ public class TestController extends HttpServlet {
         if(pointIdStr != null){
             int pointId = Integer.parseInt(pointIdStr);
 
-            if(FileUtil.uploadFile(fileItemList, PointService.getInstance().getDocumentFolderURL(pointId), "file")){
+            String newFileName = System.currentTimeMillis() + "";
+
+            if(FileUtil.uploadFile(fileItemList, PointService.getInstance().getDocumentFolderLocalPath(pointId), "file", newFileName)){
                 //打印已上传的文件列表
 
                 List<String> fileList = PointService.getInstance().getListOfDocumentFilename(pointId);
 
                 for(String fileName : fileList){
-                    out.println(String.format("/asserts/point/%d/document/%s", pointId, fileName));
+                    out.println(PointService.getInstance().getDocumentFolderURL(pointId) + fileName);
                 }
             }
 

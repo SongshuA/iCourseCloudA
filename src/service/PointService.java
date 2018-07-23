@@ -18,6 +18,10 @@ public interface PointService {
 
     String getDocumentFolderURL(int pointId);
 
+    String getVideoFolderLocalPath(int pointId);
+
+    String getDocumentFolderLocalPath(int pointId);
+
     List<String> getListOfVideoFilename(int pointId);
 
     List<String> getListOfDocumentFilename(int pointId);

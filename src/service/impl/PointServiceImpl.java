@@ -57,15 +57,25 @@ public class PointServiceImpl implements PointService {
         return String.format("/asserts/point/%d/document/", pointId);
     }
 
+    @Override
+    public String getVideoFolderLocalPath(int pointId) {
+        return String.format("%s/point/%d/video", GlobalConfig.assertPath, pointId);
+    }
+
+    @Override
+    public String getDocumentFolderLocalPath(int pointId) {
+        return String.format(String.format("%s/point/%d/document", GlobalConfig.assertPath, pointId));
+    }
+
 
     @Override
     public List<String> getListOfVideoFilename(int pointId) {
-        return FileUtil.walkThroughFolder(String.format("%s/point/%d/video", GlobalConfig.assertPath, pointId));
+        return FileUtil.walkThroughFolder(getVideoFolderLocalPath(pointId));
     }
 
     @Override
     public List<String> getListOfDocumentFilename(int pointId) {
-        return FileUtil.walkThroughFolder(String.format("%s/point/%d/document", GlobalConfig.assertPath, pointId));
+        return FileUtil.walkThroughFolder(getDocumentFolderLocalPath(pointId));
     }
 
 

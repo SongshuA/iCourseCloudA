@@ -4,6 +4,10 @@ $(document).ready(function () {
    $('.carousel').carousel();
 });
 
+$(window).resize(function () {
+    $('.carousel').carousel();
+});
+
 
 var util = {
     showError: function (formName, message) {
