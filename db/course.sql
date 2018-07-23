@@ -11,10 +11,10 @@
  Target Server Version : 50640
  File Encoding         : 65001
 
- Date: 20/07/2018 23:20:26
+ Date: 22/07/2018 20:36:26
 */
 
-SET NAMES utf8mb4;
+SET NAMES utf8;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
@@ -62,7 +62,7 @@ CREATE TABLE `chapter` (
   PRIMARY KEY (`id`),
   KEY `chapter_courseId_FK` (`courseId`),
   CONSTRAINT `chapter_courseId_FK` FOREIGN KEY (`courseId`) REFERENCES `course` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for comment
@@ -88,12 +88,11 @@ CREATE TABLE `course` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `description` text,
-  `assertFolderPath` varchar(255) DEFAULT NULL,
   `creatorId` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `course_creator_FK` (`creatorId`),
   CONSTRAINT `course_creator_FK` FOREIGN KEY (`creatorId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='课程表格';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='课程表';
 
 -- ----------------------------
 -- Table structure for homework
@@ -117,13 +116,11 @@ CREATE TABLE `point` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `description` text,
-  `videoFolderPath` varchar(255) DEFAULT NULL,
-  `documentFolderPath` varchar(255) DEFAULT NULL,
   `chapterId` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `point_chapterId_FK` (`chapterId`),
   CONSTRAINT `point_chapterId_FK` FOREIGN KEY (`chapterId`) REFERENCES `chapter` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for select
@@ -149,6 +146,6 @@ CREATE TABLE `user` (
   `username` varchar(255) NOT NULL,
   `passwordHash` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 SET FOREIGN_KEY_CHECKS = 1;
