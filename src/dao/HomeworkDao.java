@@ -14,4 +14,8 @@ public interface HomeworkDao {
     Homework getById(int id);
 
     List<Homework> getByCourse(Course course);
+
+    void delete(int id);
+
+    void update(int id, Homework homework);
 }

@@ -16,4 +16,8 @@ public interface CourseDao {
     List<Course> getByCreator(User creator);
 
     List<Course> getAll();
+
+    void delete(int id);
+
+    void update(int id, Course course);
 }

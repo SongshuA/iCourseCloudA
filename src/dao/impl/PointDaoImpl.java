@@ -58,4 +58,24 @@ public class PointDaoImpl implements PointDao {
 
         return query.run();
     }
+
+    @Override
+    public void update(int id, Point point) {
+        SQLExecute execute = new SQLExecute("UPDATE point SET name=?, description=?, chapterId=? WHERE id=?", statement -> {
+            statement.setString(1, point.getName());
+            statement.setString(2, point.getDescription());
+            statement.setInt(3, point.getChapter().getId());
+            statement.setInt(4, id);
+        });
+
+        execute.run();
+    }
+
+    @Override
+    public void delete(int id) {
+        SQLExecute execute = new SQLExecute("DELETE FROM point WHERE id=?", statement -> {
+            statement.setInt(1, id);
+        });
+        execute.run();
+    }
 }

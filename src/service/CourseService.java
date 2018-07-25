@@ -16,6 +16,8 @@ public interface CourseService {
 
     void selectCourse(String username, int courseId) throws ServiceException;
 
+    void dropCourse(String username, int courseId) throws ServiceException;
+
     String getResourceFolderURL(int courseId);
 
     String getResourceFolderLocalPath(int courseId);
@@ -24,9 +26,15 @@ public interface CourseService {
 
     String getCoverURL(int courseId);
 
+    String getCoverLocalPath(int courseId);
+
     List<Course> getSelectedCourses(String username) throws ServiceException;
 
     List<Course> getCreatedCourses(String creatorUsername) throws ServiceException;
 
     Course getCourseById(int id);
+
+    void deleteCourseById(int id);
+
+    void updateCourse(int id, String name, String description) throws ServiceException;
 }

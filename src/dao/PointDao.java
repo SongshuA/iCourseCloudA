@@ -14,4 +14,8 @@ public interface PointDao {
     Point getById(int id);
 
     List<Point> getByChapter(Chapter chapter);
+
+    void update(int id, Point point);
+
+    void delete(int id);
 }

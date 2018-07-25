@@ -9,6 +9,7 @@ import domain.User;
 import util.JDBCTools.SQLExecute;
 import util.JDBCTools.SQLQuery;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SelectDaoImpl implements SelectDao {
@@ -62,5 +63,32 @@ public class SelectDaoImpl implements SelectDao {
         });
 
         return query.run();
+    }
+
+    @Override
+    public Select getByUserAndCourse(User user, Course course) {
+        Select select = null;
+
+        SQLQuery<Select> query = new SQLQuery<>("SELECT * FROM select WHERE userId=? AND courseId = ?", statement -> {
+            statement.setInt(1, user.getId());
+            statement.setInt(2, course.getId());
+        }, (rs, list) -> {
+            if(rs.next())
+                list.add(new Select(rs.getInt("id"), user, course));
+        });
+
+        List<Select> selects = query.run();
+        if(selects.size() > 0)
+            select = selects.get(0);
+
+        return select;
+    }
+
+    @Override
+    public void delete(int id) {
+        SQLExecute execute = new SQLExecute("DELETE FROM select WHERE id=?", statement -> {
+            statement.setInt(1, id);
+        });
+        execute.run();
     }
 }

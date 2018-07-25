@@ -1,6 +1,7 @@
 package service.impl;
 
 import dao.HomeworkDao;
+import domain.Answer;
 import domain.Course;
 import domain.Homework;
 import exception.ServiceException;
@@ -50,5 +51,21 @@ public class HomeworkServiceImpl implements HomeworkService {
             throw new ServiceException("作业对应的课程不存在");
 
         return homeworkDao.create(new Homework(0, name,context, course));
+    }
+
+    @Override
+    public void deleteHomeworkById(int id) {
+        homeworkDao.delete(id);
+    }
+
+    @Override
+    public void updateHomeworkById(int id, String name, String context) throws ServiceException {
+        Homework homework = getHomeworkById(id);
+        if(homework == null)
+            throw new ServiceException("未找到需要修改的作业对象");
+
+        homework.setName(name);
+        homework.setContext(context);
+        homeworkDao.update(id, homework);
     }
 }

@@ -10,4 +10,10 @@ public interface AnswerService {
     Answer getAnswer(String username, int homeworkId);
 
     int createAnswer(String context, String username, int homeworkId) throws ServiceException;
+
+    Answer getAnswerById(int id);
+
+    void updateAnswerById(int id, String context) throws ServiceException;
+
+    void examineAnswerById(int id, int score) throws ServiceException;
 }

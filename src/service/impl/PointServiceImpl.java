@@ -83,4 +83,21 @@ public class PointServiceImpl implements PointService {
     public Point getPointById(int id) {
         return pointDao.getById(id);
     }
+
+
+    @Override
+    public void deletePointById(int id) {
+        pointDao.delete(id);
+    }
+
+    @Override
+    public void updatePointById(int id, String name, String description) throws ServiceException {
+        Point point = getPointById(id);
+        if(point == null)
+            throw new ServiceException("未找到需要修改的知识点对象");
+
+        point.setName(name);
+        point.setDescription(description);
+        pointDao.update(id, point);
+    }
 }

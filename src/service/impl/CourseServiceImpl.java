@@ -3,6 +3,7 @@ package service.impl;
 import config.GlobalConfig;
 import dao.CourseDao;
 import dao.SelectDao;
+import domain.Chapter;
 import domain.Course;
 import domain.Select;
 import domain.User;
@@ -72,6 +73,25 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    public void dropCourse(String username, int courseId) throws ServiceException {
+        User user = UserService.getInstance().queryUser(username);
+        Course course = CourseService.getInstance().getCourseById(courseId);
+
+        if(user == null)
+            throw new ServiceException("无法找到对应用户");
+
+        if(course == null)
+            throw new ServiceException("无法找到对应课程");
+
+        Select select = selectDao.getByUserAndCourse(user, course);
+
+        if(select == null)
+            throw new ServiceException("该用户没有选择此课程");
+
+        selectDao.delete(select.getId());
+    }
+
+    @Override
     public String getResourceFolderURL(int courseId) {
         return String.format("/asserts/course/%d/resource/", courseId);
     }
@@ -88,7 +108,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public String getCoverURL(int courseId) {
-        String localPath = String.format("%s/course/%d/cover", GlobalConfig.assertPath, courseId);
+        String localPath = getCoverLocalPath(courseId);
         String url = String.format("/asserts/course/%d/cover", courseId);
 
         File file = new File(localPath);
@@ -97,6 +117,11 @@ public class CourseServiceImpl implements CourseService {
             return GlobalConfig.defaultCourseIcon;
         else
             return url;
+    }
+
+    @Override
+    public String getCoverLocalPath(int courseId) {
+        return String.format("%s/course/%d/cover", GlobalConfig.assertPath, courseId);
     }
 
 
@@ -129,5 +154,21 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Course getCourseById(int id) {
         return courseDao.getById(id);
+    }
+
+    @Override
+    public void deleteCourseById(int id) {
+        courseDao.delete(id);
+    }
+
+    @Override
+    public void updateCourse(int id, String name, String description) throws ServiceException {
+        Course course = getCourseById(id);
+        if(course == null)
+            throw new ServiceException("未找到需要修改的课程对象");
+
+        course.setName(name);
+        course.setDescription(description);
+        courseDao.update(id, course);
     }
 }

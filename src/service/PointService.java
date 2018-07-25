@@ -27,4 +27,8 @@ public interface PointService {
     List<String> getListOfDocumentFilename(int pointId);
 
     Point getPointById(int id);
+
+    void deletePointById(int id);
+
+    void updatePointById(int id, String name, String description) throws ServiceException;
 }

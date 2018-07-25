@@ -58,4 +58,24 @@ public class HomeworkDaoImpl implements HomeworkDao {
 
         return query.run();
     }
+
+    @Override
+    public void delete(int id) {
+        SQLExecute execute = new SQLExecute("DELETE FROM homework WHERE id=?", statement -> {
+            statement.setInt(1, id);
+        });
+        execute.run();
+    }
+
+    @Override
+    public void update(int id, Homework homework) {
+        SQLExecute execute = new SQLExecute("UPDATE homework SET name=?, context=?, courseId=? WHERE id=?", statement -> {
+            statement.setString(1, homework.getName());
+            statement.setString(2, homework.getContext());
+            statement.setInt(3, homework.getCourse().getId());
+            statement.setInt(4, id);
+        });
+
+        execute.run();
+    }
 }

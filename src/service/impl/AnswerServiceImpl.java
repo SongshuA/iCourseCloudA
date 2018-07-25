@@ -54,4 +54,29 @@ public class AnswerServiceImpl implements AnswerService {
 
         return answerDao.create(answer);
     }
+
+    @Override
+    public Answer getAnswerById(int id) {
+        return answerDao.getById(id);
+    }
+
+    @Override
+    public void updateAnswerById(int id, String context) throws ServiceException {
+        Answer answer = getAnswerById(id);
+        if(answer == null)
+            throw new ServiceException("未找到需要修改的答案对象");
+
+        answer.setContext(context);
+        answerDao.update(id, answer);
+    }
+
+    @Override
+    public void examineAnswerById(int id, int score) throws ServiceException {
+        Answer answer = getAnswerById(id);
+        if(answer == null)
+            throw new ServiceException("未找到需要评分的答案对象");
+
+        answer.setScore(score);
+        answerDao.update(id, answer);
+    }
 }

@@ -1,6 +1,7 @@
 package service.impl;
 
 import dao.ChapterDao;
+import domain.Answer;
 import domain.Chapter;
 import domain.Course;
 import exception.ServiceException;
@@ -51,5 +52,20 @@ public class ChapterServiceImpl implements ChapterService {
     @Override
     public Chapter getChapterById(int id) {
         return chapterDao.getById(id);
+    }
+
+    @Override
+    public void deleteChapterById(int id) {
+        chapterDao.delete(id);
+    }
+
+    @Override
+    public void updateChapterById(int id, String name) throws ServiceException {
+        Chapter chapter = getChapterById(id);
+        if(chapter == null)
+            throw new ServiceException("未找到需要修改的章节对象");
+
+        chapter.setName(name);
+        chapterDao.update(id, chapter);
     }
 }

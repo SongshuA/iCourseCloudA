@@ -14,5 +14,9 @@ public interface AnswerDao {
 
     List<Answer> getByHomework(Homework homework);
 
+    Answer getById(int id);
+
     Answer getByUserAndCourse(User user, Homework homework);
+
+    void update(int id, Answer answer);
 }

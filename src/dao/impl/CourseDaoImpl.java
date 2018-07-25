@@ -73,4 +73,24 @@ public class CourseDaoImpl implements CourseDao {
 
         return query.run();
     }
+
+    @Override
+    public void delete(int id) {
+        SQLExecute execute = new SQLExecute("DELETE FROM course WHERE id=?", statement -> {
+            statement.setInt(1, id);
+        });
+        execute.run();
+    }
+
+    @Override
+    public void update(int id, Course course) {
+        SQLExecute execute = new SQLExecute("UPDATE course SET name=?, description=?, creatorId=? WHERE id=?", statement -> {
+            statement.setString(1, course.getName());
+            statement.setString(2, course.getDescription());
+            statement.setInt(3, course.getCreator().getId());
+            statement.setInt(4, id);
+        });
+
+        execute.run();
+    }
 }

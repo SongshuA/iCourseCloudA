@@ -14,4 +14,8 @@ public interface ChapterDao {
     Chapter getById(int id);
 
     List<Chapter> getByCourse(Course course);
+
+    void delete(int id);
+
+    void update(int id, Chapter chapter);
 }

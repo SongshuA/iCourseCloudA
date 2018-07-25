@@ -59,4 +59,23 @@ public class ChapterDaoImpl implements ChapterDao {
 
         return query.run();
     }
+
+    @Override
+    public void delete(int id) {
+        SQLExecute execute = new SQLExecute("DELETE FROM chapter WHERE id=?", statement -> {
+            statement.setInt(1, id);
+        });
+        execute.run();
+    }
+
+    @Override
+    public void update(int id, Chapter chapter) {
+        SQLExecute execute = new SQLExecute("UPDATE chapter SET name=?, courseId=? WHERE id=?", statement -> {
+            statement.setString(1, chapter.getName());
+            statement.setInt(2,chapter.getCourse().getId());
+            statement.setInt(3, id);
+        });
+
+        execute.run();
+    }
 }

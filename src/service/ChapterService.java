@@ -14,4 +14,8 @@ public interface ChapterService {
     int createChapter(String name, int courseId) throws ServiceException;
 
     Chapter getChapterById(int id);
+
+    void deleteChapterById(int id);
+
+    void updateChapterById(int id, String name) throws ServiceException;
 }

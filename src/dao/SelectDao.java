@@ -15,4 +15,8 @@ public interface SelectDao {
     List<Select> getByUser(User user);
 
     List<Select> getByCourse(Course course);
+
+    Select getByUserAndCourse(User user, Course course);
+
+    void delete(int id);
 }
