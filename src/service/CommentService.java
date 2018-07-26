@@ -6,6 +6,9 @@ import service.impl.CommentServiceImpl;
 
 import java.util.List;
 
+/**
+ * 讨论板（评论）操作类
+ */
 public interface CommentService {
     static CommentService getInstance() { return CommentServiceImpl.getInstance(); }
 

@@ -6,6 +6,9 @@ import service.impl.BarrageServiceImpl;
 
 import java.util.List;
 
+/**
+ * 弹幕操作类
+ */
 public interface BarrageService {
     static BarrageService getInstance() { return BarrageServiceImpl.getInstance(); }
 

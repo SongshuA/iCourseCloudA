@@ -4,6 +4,10 @@ import domain.Answer;
 import exception.ServiceException;
 import service.impl.AnswerServiceImpl;
 
+/**
+ * （作业的）答案操作类
+ */
+
 public interface AnswerService {
     static AnswerService getInstance() { return AnswerServiceImpl.getInstance(); }
 

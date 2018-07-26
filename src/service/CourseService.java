@@ -6,6 +6,9 @@ import service.impl.CourseServiceImpl;
 
 import java.util.List;
 
+/**
+ * 课程操作类
+ */
 public interface CourseService {
 
     static CourseService getInstance() { return CourseServiceImpl.getInstance(); }

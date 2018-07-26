@@ -6,6 +6,9 @@ import service.impl.ChapterServiceImpl;
 
 import java.util.List;
 
+/**
+ *  章节操作类
+ */
 public interface ChapterService {
     static ChapterService getInstance() { return ChapterServiceImpl.getInstance(); }
 
