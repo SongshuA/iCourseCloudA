@@ -108,6 +108,7 @@ public interface CourseService {
      */
     void deleteCourseById(int id);
 
+
     /**
      * 更改课程信息
      * @param id 要修改的课程ID
@@ -116,4 +117,14 @@ public interface CourseService {
      * @throws ServiceException 操作失败时抛出的异常，通过e.getMessage()获得错误原因
      */
     void updateCourse(int id, String name, String description) throws ServiceException;
+
+
+    /**
+     * 搜索课程（按照选课人数倒序排序）
+     * @param keyword 关键词
+     * @param skip 跳过多少课程（用于翻页）
+     * @param limit 一共取出多少条记录（用于翻页）
+     * @return 搜索到的课程对象列表
+     */
+    List<Course> searchCourse(String keyword, int skip, int limit);
 }

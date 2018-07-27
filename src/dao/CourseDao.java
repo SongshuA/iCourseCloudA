@@ -20,4 +20,6 @@ public interface CourseDao {
     void delete(int id);
 
     void update(int id, Course course);
+
+    List<Course> getCoursesLike(String keyword, int skip, int limit);
 }

@@ -171,4 +171,9 @@ public class CourseServiceImpl implements CourseService {
         course.setDescription(description);
         courseDao.update(id, course);
     }
+
+    @Override
+    public List<Course> searchCourse(String keyword, int skip, int limit) {
+        return courseDao.getCoursesLike(keyword, skip, limit);
+    }
 }

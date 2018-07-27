@@ -93,4 +93,46 @@ public class CourseDaoImpl implements CourseDao {
 
         execute.run();
     }
+
+    @Override
+    public List<Course> getCoursesLike(String keyword, int skip, int limit) {
+        UserDao userDao = UserDao.getInstance();
+
+        SQLQuery<Course> query = new SQLQuery<>(
+                "SELECT " +
+                " `user`.username, " +
+                " course.id, " +
+                " course.`name` AS courseName, " +
+                " course.description, " +
+                " COUNT(`select`.userId) AS selectCount, " +
+                " course.creatorId " +
+                "FROM " +
+                " course " +
+                "INNER JOIN `user` ON course.creatorId = `user`.id " +
+                "LEFT JOIN `select` ON `select`.courseId = course.id " +
+                "AND `select`.userId = `user`.id " +
+                "WHERE " +
+                " course.`name` LIKE ? " +
+                "OR course.description LIKE ? " +
+                "OR `user`.username LIKE ? " +
+                "ORDER BY " +
+                " selectCount DESC " +
+                "LIMIT ?,? ",
+        statement -> {
+                String pattern = "%" + keyword + "%";
+                statement.setString(1, pattern);
+                statement.setString(2, pattern);
+                statement.setString(3, pattern);
+                statement.setInt(4, skip);
+                statement.setInt(5, limit);
+        }, (rs, list) -> {
+
+                while(rs.next()){
+                    list.add(new Course(rs.getInt("id"), rs.getString("courseName"),
+                            rs.getString("description"), userDao.getById(rs.getInt("creatorId"))));
+                }
+        });
+
+        return query.run();
+    }
 }
