@@ -176,4 +176,14 @@ public class CourseServiceImpl implements CourseService {
     public List<Course> searchCourse(String keyword, int skip, int limit) {
         return courseDao.getCoursesLike(keyword, skip, limit);
     }
+
+    @Override
+    public List<Course> getCourseOrderByEngagement(int limit) {
+        return courseDao.getCourseOrderByEngagement(limit);
+    }
+
+    @Override
+    public List<Course> getCourseOrderByTime(int limit) {
+        return courseDao.getCourseOrderByTime(limit);
+    }
 }

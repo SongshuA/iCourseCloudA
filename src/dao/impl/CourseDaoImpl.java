@@ -95,6 +95,32 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
+    public List<Course> getCourseOrderByEngagement(int limit) {
+        UserDao userDao = UserDao.getInstance();
+        SQLQuery<Course> query = new SQLQuery<>("SELECT course.id, course.`name`, course.description, course.creatorId FROM course LEFT JOIN `select` ON `select`.courseId = course.id GROUP BY course.id ORDER BY COUNT(`select`.userId) DESC LIMIT ?", statement -> {
+            statement.setInt(1, limit);
+        }, (rs, list) -> {
+            while(rs.next())
+                list.add(new Course(rs.getInt("id"), rs.getString("courseName"), rs.getString("description"), userDao.getById(rs.getInt("creatorId"))));
+        });
+
+        return query.run();
+    }
+
+    @Override
+    public List<Course> getCourseOrderByTime(int limit) {
+        UserDao userDao = UserDao.getInstance();
+        SQLQuery<Course> query = new SQLQuery<>("SELECT * FROM course ORDER BY course.id DESC LIMIT ?", statement -> {
+            statement.setInt(1, limit);
+        }, (rs, list) -> {
+            while(rs.next())
+                list.add(new Course(rs.getInt("id"), rs.getString("courseName"), rs.getString("description"), userDao.getById(rs.getInt("creatorId"))));
+        });
+
+        return query.run();
+    }
+
+    @Override
     public List<Course> getCoursesLike(String keyword, int skip, int limit) {
         UserDao userDao = UserDao.getInstance();
 

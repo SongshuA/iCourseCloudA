@@ -21,5 +21,9 @@ public interface CourseDao {
 
     void update(int id, Course course);
 
+    List<Course> getCourseOrderByEngagement(int limit);
+
+    List<Course> getCourseOrderByTime(int limit);
+
     List<Course> getCoursesLike(String keyword, int skip, int limit);
 }

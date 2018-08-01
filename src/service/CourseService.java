@@ -130,4 +130,8 @@ public interface CourseService {
      * @return 搜索到的课程对象列表
      */
     List<Course> searchCourse(String keyword, int skip, int limit);
+
+    List<Course> getCourseOrderByEngagement(int limit);
+
+    List<Course> getCourseOrderByTime(int limit);
 }
