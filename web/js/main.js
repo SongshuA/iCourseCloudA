@@ -2,6 +2,8 @@ $(document).ready(function () {
    $('.modal').modal();
    $(".dropdown-trigger").dropdown();
    $('.carousel').carousel();
+   $('.materialboxed').materialbox();
+    $('.collapsible').collapsible();
 });
 
 $(window).resize(function () {
@@ -73,5 +75,28 @@ var util = {
             window.location.reload();
         });
 
+    },
+
+    setUrlParam: function (key, value) {
+        var url = window.location.href;
+        var i = url.indexOf('#');
+        while(i >= 0){
+            url = url.substr(0, i);
+            i = url.indexOf('#');
+        }
+
+        var pattern = key + '=([^&]*)';
+        var replaceText= key+'='+ value;
+        if(url.match(pattern)){
+            var tmp='/('+ key+'=)([^&]*)/gi';
+            tmp = url.replace(eval(tmp),replaceText);
+            window.location.href = tmp;
+        }else{
+            if(url.match('[\?]')){
+                window.location.href = url+'&'+replaceText;
+            }else{
+                window.location.href = url+'?'+replaceText;
+            }
+        }
     }
 };

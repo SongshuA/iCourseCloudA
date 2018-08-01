@@ -29,7 +29,7 @@
 
         <div class="carousel-item cover-display white-text"
              style="background-image: url('<%=CourseService.getInstance().getCoverURL(course.getId())%>')">
-            <a href="${pageContext.request.contextPath}/course?courseId=<%=course.getId()%>">
+            <a href="${pageContext.request.contextPath}/detail?courseId=<%=course.getId()%>">
                 <h2 class="text-shadow white-text"><%=course.getName()%></h2>
                 <p class="text-shadow white-text"><%=course.getDescription()%></p>
             </a>
@@ -55,7 +55,7 @@
                         <p><%=course.getDescription()%></p>
                     </div>
                     <div class="card-action">
-                        <a href="${pageContext.request.contextPath}/course?courseId=<%=course.getId()%>">查看详情</a>
+                        <a href="${pageContext.request.contextPath}/detail?courseId=<%=course.getId()%>">查看详情</a>
                     </div>
                 </div>
             </div>

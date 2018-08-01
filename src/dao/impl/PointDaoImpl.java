@@ -38,7 +38,7 @@ public class PointDaoImpl implements PointDao {
 
         SQLQuery<Point> query = new SQLQuery<>("SELECT * FROM point WHERE id = ?", statement -> statement.setInt(1, id), (rs, list) -> {
             if(rs.next())
-                list.add(new Point(id, rs.getString("name"), rs.getString("description"), chapterDao.getById(rs.getInt("id"))));
+                list.add(new Point(id, rs.getString("name"), rs.getString("description"), chapterDao.getById(rs.getInt("chapterId"))));
         });
 
         List<Point> list = query.run();
