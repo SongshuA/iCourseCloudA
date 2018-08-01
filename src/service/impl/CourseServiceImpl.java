@@ -7,6 +7,7 @@ import domain.Chapter;
 import domain.Course;
 import domain.Select;
 import domain.User;
+import domain.comparator.CourseIdComparator;
 import exception.ServiceException;
 import service.CourseService;
 import service.UserService;
@@ -14,6 +15,7 @@ import util.FileUtil;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CourseServiceImpl implements CourseService {
@@ -173,8 +175,27 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Course> searchCourse(String keyword, int skip, int limit) {
-        return courseDao.getCoursesLike(keyword, skip, limit);
+    public List<Course> searchCourseByNameOrderByEngagement(String keyword, int skip, int limit) {
+        return courseDao.getCoursesByNameLike(keyword, skip, limit);
+    }
+
+    @Override
+    public List<Course> searchCourseByCreatorNameOrderByEngagement(String keyword, int skip, int limit) {
+        return courseDao.getCoursesByCreatorNameLike(keyword, skip, limit);
+    }
+
+    @Override
+    public List<Course> searchCourseByNameOrderByCreateTime(String keyword, int skip, int limit) {
+        List<Course> courses = courseDao.getCoursesByNameLike(keyword, skip, limit);
+        courses.sort(new CourseIdComparator());
+        return courses;
+    }
+
+    @Override
+    public List<Course> searchCourseByCreatorNameOrderByCreateTime(String keyword, int skip, int limit) {
+        List<Course> courses = courseDao.getCoursesByCreatorNameLike(keyword, skip, limit);
+        courses.sort(new CourseIdComparator());
+        return courses;
     }
 
     @Override
@@ -183,7 +204,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Course> getCourseOrderByTime(int limit) {
+    public List<Course> getCourseOrderByCreateTime(int limit) {
         return courseDao.getCourseOrderByTime(limit);
     }
 }

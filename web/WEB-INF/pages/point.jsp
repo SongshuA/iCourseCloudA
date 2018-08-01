@@ -1,10 +1,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ page import="config.GlobalConfig" %>
-<%@ page import="domain.Course" %>
-<%@ page import="java.util.List" %>
-<%@ page import="service.CourseService" %>
-<%@ page import="domain.Point" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>

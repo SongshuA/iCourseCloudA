@@ -25,5 +25,7 @@ public interface CourseDao {
 
     List<Course> getCourseOrderByTime(int limit);
 
-    List<Course> getCoursesLike(String keyword, int skip, int limit);
+    List<Course> getCoursesByNameLike(String keyword, int skip, int limit);
+
+    List<Course> getCoursesByCreatorNameLike(String keyword, int skip, int limit);
 }

@@ -129,9 +129,15 @@ public interface CourseService {
      * @param limit 一共取出多少条记录（用于翻页）
      * @return 搜索到的课程对象列表
      */
-    List<Course> searchCourse(String keyword, int skip, int limit);
+    List<Course> searchCourseByNameOrderByEngagement(String keyword, int skip, int limit);
+
+    List<Course> searchCourseByCreatorNameOrderByEngagement(String keyword, int skip, int limit);
+
+    List<Course> searchCourseByNameOrderByCreateTime(String keyword, int skip, int limit);
+
+    List<Course> searchCourseByCreatorNameOrderByCreateTime(String keyword, int skip, int limit);
 
     List<Course> getCourseOrderByEngagement(int limit);
 
-    List<Course> getCourseOrderByTime(int limit);
+    List<Course> getCourseOrderByCreateTime(int limit);
 }
