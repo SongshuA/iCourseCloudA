@@ -3,6 +3,7 @@ package controller;
 import exception.ServiceException;
 import service.UserService;
 import util.JSONResponse;
+import util.StringUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -35,6 +36,16 @@ public class RegisterController extends HttpServlet {
 
         if(username.isEmpty() || password.isEmpty()){
             out.print(new JSONResponse(false, "用户名和密码不能为空"));
+            return;
+        }
+
+        if(StringUtil.isPureDigit(password)){
+            out.println(new JSONResponse(false, "密码不能为纯数字"));
+            return;
+        }
+
+        if(password.length() < 6){
+            out.println(new JSONResponse(false, "密码长度必须大于等于6位"));
             return;
         }
 
