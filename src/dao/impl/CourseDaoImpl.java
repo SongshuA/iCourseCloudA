@@ -101,7 +101,7 @@ public class CourseDaoImpl implements CourseDao {
             statement.setInt(1, limit);
         }, (rs, list) -> {
             while(rs.next())
-                list.add(new Course(rs.getInt("id"), rs.getString("courseName"), rs.getString("description"), userDao.getById(rs.getInt("creatorId"))));
+                list.add(new Course(rs.getInt("id"), rs.getString("name"), rs.getString("description"), userDao.getById(rs.getInt("creatorId"))));
         });
 
         return query.run();
@@ -114,7 +114,7 @@ public class CourseDaoImpl implements CourseDao {
             statement.setInt(1, limit);
         }, (rs, list) -> {
             while(rs.next())
-                list.add(new Course(rs.getInt("id"), rs.getString("courseName"), rs.getString("description"), userDao.getById(rs.getInt("creatorId"))));
+                list.add(new Course(rs.getInt("id"), rs.getString("name"), rs.getString("description"), userDao.getById(rs.getInt("creatorId"))));
         });
 
         return query.run();
@@ -154,7 +154,7 @@ public class CourseDaoImpl implements CourseDao {
         }, (rs, list) -> {
 
                 while(rs.next()){
-                    list.add(new Course(rs.getInt("id"), rs.getString("courseName"),
+                    list.add(new Course(rs.getInt("id"), rs.getString("name"),
                             rs.getString("description"), userDao.getById(rs.getInt("creatorId"))));
                 }
         });

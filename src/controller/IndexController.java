@@ -14,11 +14,17 @@ import java.util.List;
 
 @WebServlet(name = "Index", urlPatterns = "/index")
 public class IndexController extends HttpServlet {
+    private CourseService courseService;
+
+    @Override
+    public void init() throws ServletException {
+        courseService = CourseService.getInstance();
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Course> courses = CourseService.getInstance().getAllCourse();
-        req.setAttribute("hottest", courses);
-        req.setAttribute("newest", courses);
+        req.setAttribute("hottest", courseService.getCourseOrderByEngagement(4));
+        req.setAttribute("newest", courseService.getCourseOrderByTime(4));
 
         req.getRequestDispatcher("/WEB-INF/pages/index.jsp").forward(req, resp);
     }
