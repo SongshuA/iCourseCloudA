@@ -16,6 +16,10 @@ import java.io.PrintWriter;
 public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if(req.getSession().getAttribute("username") != null){
+            resp.sendRedirect("/");
+            return;
+        }
         req.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(req, resp);
     }
 
