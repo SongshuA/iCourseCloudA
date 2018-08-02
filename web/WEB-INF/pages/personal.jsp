@@ -18,6 +18,13 @@
 
 <% int frame = (Integer) request.getAttribute("frame"); %>
 
+<div class="fixed-action-btn">
+    <a href="${pageContext.request.contextPath}/course" class="btn-floating btn-large red">
+        <i class="large material-icons">add</i>
+    </a>
+</div>
+
+
 <div class="page-container container">
 
     <div class="row">
