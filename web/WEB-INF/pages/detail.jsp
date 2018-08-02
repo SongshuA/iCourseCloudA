@@ -91,6 +91,16 @@
 
                     </ul>
 
+                    <c:if test="${isCreator}">
+                        <div class="card">
+                            <div class="card-action">
+                                <a href="${pageContext.request.contextPath}/resource?courseId=${course.id}">上传资源</a>
+                            </div>
+                        </div>
+                    </c:if>
+
+
+
                 </c:when>
 
                 <c:when test="${frame eq 3 and accessible}">
@@ -106,6 +116,16 @@
                             </a>
                         </c:forEach>
                     </ul>
+
+                    <c:if test="${isCreator}">
+
+                        <div class="card">
+                            <div class="card-action">
+                                <a href="${pageContext.request.contextPath}/createHomework?courseId=${course.id}">创建作业</a>
+                            </div>
+                        </div>
+
+                    </c:if>
 
                 </c:when>
 

@@ -11,13 +11,30 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/index.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
+<style>
+    body{
+        background-color: #f0f0f0;
+    }
+</style>
 <body>
+
 <jsp:include page="components/navbar.jsp" />
 
 
 <div class="page-container container">
 
-    <p>${message}</p>
+    <div class="card">
+        <div class="card-content">
+
+            <h4>${message}</h4>
+
+        </div>
+
+        <div class="card-action">
+            <a href="javascript:history.back();">返回上个页面</a>
+            <a href="${pageContext.request.contextPath}/">返回首页</a>
+        </div>
+    </div>
 
 </div>
 

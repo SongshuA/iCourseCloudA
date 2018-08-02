@@ -39,16 +39,17 @@ public interface HomeworkService {
 
     /**
      * 删除作业
-     * @param id 要删除的作业ID
+     * @param homeworkId 要删除的作业ID
      */
-    void deleteHomeworkById(int id);
+    void deleteHomeworkById(int homeworkId);
 
     /**
      * 修改作业内容
-     * @param id 要修改的作业ID
+     * @param homeworkId 要修改的作业ID
      * @param name 作业名称
      * @param context 作业内容
      * @throws ServiceException 操作失败时抛出的异常，通过e.getMessage()获得错误原因
      */
-    void updateHomeworkById(int id, String name, String context) throws ServiceException;
+    void updateHomeworkById(int homeworkId, String name, String context) throws ServiceException;
+
 }

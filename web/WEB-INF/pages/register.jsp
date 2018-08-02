@@ -12,6 +12,7 @@
 </head>
 <style>
     .page-container{max-height: 440px;}
+    body{ background-image: url("/image/bg2.jpeg"); }
 </style>
 
 <body>

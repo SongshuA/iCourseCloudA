@@ -60,6 +60,26 @@ public class PointController extends HttpServlet {
 
         Course course = point.getChapter().getCourse();
 
+        boolean isCreator = false;
+        boolean isSelector = false;
+
+
+
+        try{
+            String username = (String)(req.getSession().getAttribute("username"));
+            List<Course> selectedCourses = courseService.getSelectedCourses(username);
+            List<Course> createdCourses = courseService.getCreatedCourses(username);
+            if(selectedCourses.contains(course))
+                isSelector = true;
+
+            if(createdCourses.contains(course))
+                isCreator = true;
+        }catch (ServiceException e){
+            //do nothing
+        }
+
+        boolean accessible = isCreator || isSelector;
+
         try {
 
             chapters = chapterService.getChapters(course.getId());
@@ -81,6 +101,10 @@ public class PointController extends HttpServlet {
         req.setAttribute("documents", documents);
         req.setAttribute("chapters", chapters);
         req.setAttribute("points", points);
+        req.setAttribute("isCreator", isCreator);
+        req.setAttribute("isSelector", isSelector);
+        req.setAttribute("accessible", accessible);
+        req.setAttribute("course", course);
 
         req.getRequestDispatcher("/WEB-INF/pages/point.jsp").forward(req, resp);
     }

@@ -123,7 +123,7 @@ public interface CourseService {
 
 
     /**
-     * 搜索课程（按照选课人数倒序排序）
+     * 按名称搜索课程（按照选课人数倒序排序）
      * @param keyword 关键词
      * @param skip 跳过多少课程（用于翻页）
      * @param limit 一共取出多少条记录（用于翻页）
@@ -131,19 +131,66 @@ public interface CourseService {
      */
     List<Course> searchCourseByNameOrderByEngagement(String keyword, int skip, int limit);
 
+    /**
+     * 按开课老师搜索课程（按照选课人数倒序排序）
+     * @param keyword 关键词
+     * @param skip 跳过多少课程（用于翻页）
+     * @param limit 一共取出多少条记录（用于翻页）
+     * @return 搜索到的课程对象列表
+     */
     List<Course> searchCourseByCreatorNameOrderByEngagement(String keyword, int skip, int limit);
 
+    /**
+     * 按名称搜索课程（按照创建时间倒序排序）
+     * @param keyword 关键词
+     * @param skip 跳过多少课程（用于翻页）
+     * @param limit 一共取出多少条记录（用于翻页）
+     * @return 搜索到的课程对象列表
+     */
     List<Course> searchCourseByNameOrderByCreateTime(String keyword, int skip, int limit);
 
+    /**
+     * 按开课老师搜索课程（按照创建时间倒序排序）
+     * @param keyword 关键词
+     * @param skip 跳过多少课程（用于翻页）
+     * @param limit 一共取出多少条记录（用于翻页）
+     * @return 搜索到的课程对象列表
+     */
     List<Course> searchCourseByCreatorNameOrderByCreateTime(String keyword, int skip, int limit);
 
+    /**
+     * 获取关键词（课程名称）能搜索到的课程总数
+     * @param keyword 关键词
+     * @return 课程总数
+     */
     int getSearchCountByName(String keyword);
 
+    /**
+     * 获取关键词（开课老师）能搜索到的课程总数
+     * @param keyword 关键词
+     * @return 课程总数
+     */
     int getSearchCountByCreatorName(String keyword);
 
+    /**
+     * 取出选课人数排名前若干名的课程
+     * @param limit 取出的课程数
+     * @return 课程列表
+     */
     List<Course> getCourseOrderByEngagement(int limit);
 
+    /**
+     * 取出创建时间排名前若干名的课程
+     * @param limit 取出的课程数
+     * @return 课程列表
+     */
     List<Course> getCourseOrderByCreateTime(int limit);
 
+    /**
+     * 检查用户是否有修改课程的权限
+     * @param username 用户名
+     * @param courseId 课程ID
+     * @throws ServiceException 若没有权限，可以通过e.getMessage()获得原因
+     */
     void checkUpdatePrivilege(String username , int courseId) throws ServiceException;
 }

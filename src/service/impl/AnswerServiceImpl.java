@@ -9,6 +9,9 @@ import service.AnswerService;
 import service.HomeworkService;
 import service.UserService;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AnswerServiceImpl implements AnswerService {
     private AnswerDao answerDao;
 
@@ -33,6 +36,18 @@ public class AnswerServiceImpl implements AnswerService {
             return null;
 
         return answerDao.getByUserAndCourse(user, homework);
+    }
+
+    @Override
+    public List<Answer> getAnswersByHomeworkId(int homeworkId) {
+        List<Answer> answers = new ArrayList<>();
+
+        Homework homework = HomeworkService.getInstance().getHomeworkById(homeworkId);
+
+        if(homework == null)
+            return answers;
+
+        return answerDao.getByHomework(homework);
     }
 
 

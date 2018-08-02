@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 @WebServlet(name = "Chapter", urlPatterns = "/createChapter")
-public class ChapterController extends HttpServlet {
+public class CreateChapterController extends HttpServlet {
     private ChapterService chapterService;
     private UserService userService;
     private CourseService courseService;

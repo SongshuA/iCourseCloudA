@@ -4,6 +4,8 @@ import domain.Answer;
 import exception.ServiceException;
 import service.impl.AnswerServiceImpl;
 
+import java.util.List;
+
 /**
  * （作业的）答案操作类
  */
@@ -18,6 +20,13 @@ public interface AnswerService {
      * @return 答案对象
      */
     Answer getAnswer(String username, int homeworkId);
+
+    /**
+     * 获取与某个具体作业有关的所有答案
+     * @param homeworkId 作业对象ID
+     * @return 答案对象列表
+     */
+    List<Answer> getAnswersByHomeworkId(int homeworkId);
 
     /**
      * 创建答案对象
@@ -38,7 +47,7 @@ public interface AnswerService {
 
 
     /**
-     * 修改答案内容
+     * 修改答案内容å
      * @param id 修改的答案ID
      * @param context 内容
      * @throws ServiceException 操作失败时抛出的异常，通过e.getMessage()获得错误原因

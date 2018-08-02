@@ -4,58 +4,48 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>编辑课程 - <%=GlobalConfig.siteName%></title>
+    <title>编辑作业 - <%=GlobalConfig.siteName%></title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/icon.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/main.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/index.css">
 </head>
-<style>body{background-color: #f0f0f0; }</style>
 <body>
 <jsp:include page="components/navbar.jsp" />
 
 <div class="page-container container">
 
     <div class="card">
-        <form name="course" action="${pageContext.request.contextPath}/course" method="POST" enctype="multipart/form-data">
+        <form name="homework" action="${pageContext.request.contextPath}/createHomework" method="POST">
             <div class="card-content">
                 <c:choose>
-                    <c:when test="${course eq null}">
-                        <h4 class="center-align">创建新课程</h4>
+                    <c:when test="${homework eq null}">
+                        <h4 class="center-align">创建作业</h4>
+                        <input type="hidden" name="courseId" value="${courseId}" />
                     </c:when>
 
                     <c:otherwise>
-                        <h4 class="center-align">修改课程 - ${course.name}</h4>
-                        <input type="hidden" name="courseId" value="${course.id}" />
+                        <h4 class="center-align">修改作业 - ${homework.name}</h4>
+                        <input type="hidden" name="homeworkId" value="${homework.id}" />
+                        <input type="hidden" name="courseId" value="${homework.course.id}" />
                     </c:otherwise>
                 </c:choose>
 
 
-                <div class="file-field input-field">
 
-                    <div class="btn">
-                        <span>上传封面图</span>
-                        <input type="file" name="cover" accept="image/*">
-                    </div>
-                    <div class="file-path-wrapper">
-                        <input class="file-path validate" type="text" placeholder="无">
-                    </div>
-
+                <div class="input-field">
+                    <input id="name" name="name" type="text" class="validate" value="${homework.name}">
+                    <label for="name">作业名</label>
                 </div>
 
                 <div class="input-field">
-                    <input id="name" name="name" type="text" class="validate" value="${course.name}">
-                    <label for="name">课程名</label>
-                </div>
-
-                <div class="input-field">
-                    <textarea id="description" name="description" class="materialize-textarea">${course.description}</textarea>
-                    <label for="description">课程简介</label>
+                    <textarea id="context" name="context" class="materialize-textarea">${homework.context}</textarea>
+                    <label for="context">作业内容</label>
                 </div>
 
             </div>
             <div class="card-action">
-                <a href="javascript:document.forms['course'].submit();">提交</a>
+                <a href="javascript:document.forms['homework'].submit();">提交</a>
             </div>
         </form>
 

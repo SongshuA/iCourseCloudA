@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 @WebServlet(name = "CreatePoint", urlPatterns = "/createPoint")
-public class PointController extends HttpServlet {
+public class CreatePointController extends HttpServlet {
     private PointService pointService;
     private ChapterService chapterService;
     private UserService userService;
@@ -38,34 +38,12 @@ public class PointController extends HttpServlet {
         resp.setCharacterEncoding("utf8");
 
         PrintWriter out = resp.getWriter();
-        User user = userService.queryUser((String) req.getSession().getAttribute("username"));
-
-        if(user == null){
-            out.print(new JSONResponse(false, "您尚未登录"));
-            return;
-        }
 
         String name = req.getParameter("name");
         String description = req.getParameter("description");
 
-        Integer courseId = null;
-        Integer chapterId;
+        Integer chapterId = null;
         Integer pointId = null;
-
-        try{
-            chapterId = Integer.parseInt(req.getParameter("chapterId"));
-            Chapter chapter = chapterService.getChapterById(chapterId);
-            if(chapter == null){
-                out.print(new JSONResponse(false, "未能找到章节"));
-                return;
-            }
-            courseId = chapter.getCourse().getId();
-
-        }catch (NumberFormatException e){
-            out.print(new JSONResponse(false, "请提供章节ID"));
-            return;
-        }
-
 
 
         try{
@@ -74,30 +52,29 @@ public class PointController extends HttpServlet {
                 return;
             }
 
-            courseService.checkUpdatePrivilege(user.getUsername(), courseId);
-
             pointId = Integer.parseInt(req.getParameter("pointId"));
 
         }catch (NumberFormatException e){
             //do nothing
 
-        } catch (ServiceException e) {
-            out.print(new JSONResponse(false, e.getMessage()));
-            return;
         }
 
 
         try{
             if(pointId == null){
                 //创建知识点
+                chapterId = Integer.parseInt(req.getParameter("chapterId"));
                 pointService.createPoint(name, description, chapterId);
-
             }else{
                 //修改章节
                 pointService.updatePointById(pointId, name, description);
             }
         }catch (ServiceException e){
             out.print(new JSONResponse(false, e.getMessage()));
+            return;
+
+        }catch (NumberFormatException e){
+            out.print(new JSONResponse(false, "请提供章节ID"));
             return;
         }
 
