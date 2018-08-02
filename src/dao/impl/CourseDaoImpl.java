@@ -121,40 +121,20 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
-    public List<Course> getCoursesByNameLike(String keyword, int skip, int limit) {
+    public List<Course> getCoursesByOrderByEngagementByNameLike(String keyword, int skip, int limit) {
         UserDao userDao = UserDao.getInstance();
 
-        SQLQuery<Course> query = new SQLQuery<>(
-                "SELECT " +
-                " `user`.username, " +
-                " course.id, " +
-                " course.`name` AS courseName, " +
-                " course.description, " +
-                " COUNT(`select`.userId) AS selectCount, " +
-                " course.creatorId " +
-                "FROM " +
-                " course " +
-                "INNER JOIN `user` ON course.creatorId = `user`.id " +
-                "LEFT JOIN `select` ON `select`.courseId = course.id " +
-                "AND `select`.userId = `user`.id " +
-                "WHERE " +
-                " course.`name` LIKE ? " +
-                "OR course.description LIKE ? " +
-                "ORDER BY " +
-                " selectCount DESC " +
-                "LIMIT ?,? ",
+        SQLQuery<Course> query = new SQLQuery<>("SELECT course.* FROM course LEFT JOIN `select` ON course.id = `select`.courseId WHERE `course`.`name` LIKE ? GROUP BY `course`.id ORDER BY COUNT(`select`.id) DESC LIMIT ?,?",
         statement -> {
-                String pattern = "%" + keyword + "%";
-                statement.setString(1, pattern);
-                statement.setString(2, pattern);
-                statement.setInt(3, skip);
-                statement.setInt(4, limit);
-        }, (rs, list) -> {
+            statement.setString(1, '%' + keyword + '%');
+            statement.setInt(2, skip);
+            statement.setInt(3, limit);
 
-                while(rs.next()){
-                    list.add(new Course(rs.getInt("id"), rs.getString("name"),
-                            rs.getString("description"), userDao.getById(rs.getInt("creatorId"))));
-                }
+        }, (rs, list) -> {
+            while(rs.next()){
+                list.add(new Course(rs.getInt(1), rs.getString(2),
+                        rs.getString(3), userDao.getById(rs.getInt(4))));
+            }
         });
 
         return query.run();
@@ -162,40 +142,99 @@ public class CourseDaoImpl implements CourseDao {
 
 
     @Override
-    public List<Course> getCoursesByCreatorNameLike(String keyword, int skip, int limit) {
+    public List<Course> getCoursesByOrderByEngagementByCreatorNameLike(String keyword, int skip, int limit) {
         UserDao userDao = UserDao.getInstance();
 
-        SQLQuery<Course> query = new SQLQuery<>(
-                "SELECT " +
-                        " `user`.username, " +
-                        " course.id, " +
-                        " course.`name` AS courseName, " +
-                        " course.description, " +
-                        " COUNT(`select`.userId) AS selectCount, " +
-                        " course.creatorId " +
-                        "FROM " +
-                        " course " +
-                        "INNER JOIN `user` ON course.creatorId = `user`.id " +
-                        "LEFT JOIN `select` ON `select`.courseId = course.id " +
-                        "AND `select`.userId = `user`.id " +
-                        "WHERE " +
-                        "OR `user`.username LIKE ? " +
-                        "ORDER BY " +
-                        " selectCount DESC " +
-                        "LIMIT ?,? ",
+        SQLQuery<Course> query = new SQLQuery<>("SELECT course.* FROM course LEFT JOIN `select` ON course.id = `select`.courseId  INNER JOIN `user` ON course.creatorId = `user`.id WHERE `user`.`username` LIKE ? GROUP BY `course`.id ORDER BY COUNT(`select`.id) DESC LIMIT ?,?",
+            statement -> {
+                statement.setString(1, '%' + keyword + '%');
+                statement.setInt(2, skip);
+                statement.setInt(3, limit);
+
+            }, (rs, list) -> {
+                while(rs.next()){
+                    list.add(new Course(rs.getInt(1), rs.getString(2),
+                            rs.getString(3), userDao.getById(rs.getInt(4))));
+                }
+        });
+
+        return query.run();
+    }
+
+    @Override
+    public List<Course> getCoursesByOrderByCreateTimeByNameLike(String keyword, int skip, int limit) {
+        UserDao userDao = UserDao.getInstance();
+
+        SQLQuery<Course> query = new SQLQuery<>("SELECT course.* FROM course WHERE `course`.`name` LIKE ? ORDER BY course.id DESC LIMIT ?,?",
                 statement -> {
-                    String pattern = "%" + keyword + "%";
-                    statement.setString(1, pattern);
+                    statement.setString(1, '%' + keyword + '%');
                     statement.setInt(2, skip);
                     statement.setInt(3, limit);
-                }, (rs, list) -> {
 
+                }, (rs, list) -> {
             while(rs.next()){
-                list.add(new Course(rs.getInt("id"), rs.getString("name"),
-                        rs.getString("description"), userDao.getById(rs.getInt("creatorId"))));
+                list.add(new Course(rs.getInt(1), rs.getString(2),
+                        rs.getString(3), userDao.getById(rs.getInt(4))));
             }
         });
 
         return query.run();
+    }
+
+    @Override
+    public List<Course> getCoursesByOrderByCreateTimeByCreatorNameLike(String keyword, int skip, int limit) {
+        UserDao userDao = UserDao.getInstance();
+
+        SQLQuery<Course> query = new SQLQuery<>("SELECT course.* FROM course INNER JOIN `user` ON course.creatorId = `user`.id WHERE `user`.`username` LIKE ? ORDER BY course.id DESC LIMIT ?,?",
+                    statement -> {
+                        statement.setString(1, '%' + keyword + '%');
+                    statement.setInt(2, skip);
+                    statement.setInt(3, limit);
+
+                }, (rs, list) -> {
+            while(rs.next()){
+                list.add(new Course(rs.getInt(1), rs.getString(2),
+                        rs.getString(3), userDao.getById(rs.getInt(4))));
+            }
+        });
+
+        return query.run();
+    }
+
+    @Override
+    public int countCoursesByNameLike(String keyword) {
+        Integer count = 0;
+
+        SQLQuery<Integer> query = new SQLQuery<>("SELECT COUNT(id) FROM course WHERE `name` LIKE ?", statement -> {
+            statement.setString(1, '%' + keyword + '%');
+        }, (rs, list) -> {
+            if(rs.next())
+                list.add(rs.getInt(1));
+        });
+
+        List<Integer> r = query.run();
+
+        if(!r.isEmpty())
+            count = r.get(0);
+
+        return count;
+    }
+
+    @Override
+    public int countCoursesByCreatorNameLike(String keyword) {
+        Integer count = 0;
+
+        SQLQuery<Integer> query = new SQLQuery<>("SELECT COUNT(course.id) FROM course INNER JOIN `user` ON `user`.id = course.creatorId WHERE `user`.username LIKE ?", statement -> {
+            statement.setString(1, '%' + keyword + '%');
+        }, (rs, list) -> {
+            if(rs.next())
+                list.add(rs.getInt(1));
+        });
+
+        List<Integer> r = query.run();
+        if(!r.isEmpty())
+            count = r.get(0);
+
+        return count;
     }
 }

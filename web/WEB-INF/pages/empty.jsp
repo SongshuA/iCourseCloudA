@@ -4,7 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>作业 - <%=GlobalConfig.siteName%></title>
+    <title>主页 - <%=GlobalConfig.siteName%></title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/icon.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/main.css">
@@ -15,17 +15,7 @@
 
 <div class="page-container container">
 
-    <div class="row">
-        <div class="card col s12">
-            <div class="card-content">
-                <h4>${homework.name}</h4>
-                <p>${homework.context}</p>
-            </div>
-            <div class="card-action">
-                <a href="#">创建回答</a>
-            </div>
-        </div>
-    </div>
+    <p>这是一个空白页面，等待你来完成！</p>
 
 </div>
 

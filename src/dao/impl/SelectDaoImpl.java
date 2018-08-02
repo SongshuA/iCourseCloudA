@@ -52,7 +52,7 @@ public class SelectDaoImpl implements SelectDao {
     @Override
     public List<Select> getByCourse(Course course) {
         final UserDao userDao = UserDao.getInstance();
-        SQLQuery<Select> query = new SQLQuery<>("SELECT * FROM select WHERE courseId = ?", statement -> {
+        SQLQuery<Select> query = new SQLQuery<>("SELECT * FROM `select` WHERE courseId = ?", statement -> {
             statement.setInt(1, course.getId());
         }, (rs, list) -> {
             while(rs.next()){
@@ -69,7 +69,7 @@ public class SelectDaoImpl implements SelectDao {
     public Select getByUserAndCourse(User user, Course course) {
         Select select = null;
 
-        SQLQuery<Select> query = new SQLQuery<>("SELECT * FROM select WHERE userId=? AND courseId = ?", statement -> {
+        SQLQuery<Select> query = new SQLQuery<>("SELECT * FROM `select` WHERE userId=? AND courseId = ?", statement -> {
             statement.setInt(1, user.getId());
             statement.setInt(2, course.getId());
         }, (rs, list) -> {
@@ -86,7 +86,7 @@ public class SelectDaoImpl implements SelectDao {
 
     @Override
     public void delete(int id) {
-        SQLExecute execute = new SQLExecute("DELETE FROM select WHERE id=?", statement -> {
+        SQLExecute execute = new SQLExecute("DELETE FROM `select` WHERE id=?", statement -> {
             statement.setInt(1, id);
         });
         execute.run();

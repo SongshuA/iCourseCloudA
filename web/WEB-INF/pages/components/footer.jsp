@@ -11,7 +11,6 @@
                 <h5 class="white-text">链接</h5>
                 <ul>
                     <li><a class="grey-text text-lighten-3" href="${pageContext.request.contextPath}/">首页</a></li>
-                    <li><a class="grey-text text-lighten-3" href="${pageContext.request.contextPath}/course">课程</a></li>
                     <li><a class="grey-text text-lighten-3" href="${pageContext.request.contextPath}/search">搜索</a></li>
                 </ul>
             </div>

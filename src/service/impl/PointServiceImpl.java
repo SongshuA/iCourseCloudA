@@ -49,22 +49,22 @@ public class PointServiceImpl implements PointService {
 
     @Override
     public String getVideoFolderURL(int pointId) {
-        return String.format("/asserts/point/%d/video/", pointId);
+        return String.format("/assets/point/%d/video/", pointId);
     }
 
     @Override
     public String getDocumentFolderURL(int pointId) {
-        return String.format("/asserts/point/%d/document/", pointId);
+        return String.format("/assets/point/%d/document/", pointId);
     }
 
     @Override
     public String getVideoFolderLocalPath(int pointId) {
-        return String.format("%s/point/%d/video", GlobalConfig.assertPath, pointId);
+        return String.format("%s/point/%d/video", GlobalConfig.assetPath, pointId);
     }
 
     @Override
     public String getDocumentFolderLocalPath(int pointId) {
-        return String.format(String.format("%s/point/%d/document", GlobalConfig.assertPath, pointId));
+        return String.format(String.format("%s/point/%d/document", GlobalConfig.assetPath, pointId));
     }
 
 

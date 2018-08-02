@@ -17,10 +17,11 @@ public class Main {
         CourseService.getInstance().createCourse(admin.getUsername(), "课程四", "这是课程四的简介");
         CourseService.getInstance().createCourse(admin.getUsername(), "课程五", "这是课程五的简介");*/
 
-        List<Course> courses = CourseService.getInstance().searchCourse("Javac", 0, 100);
+        //List<Course> courses = CourseService.getInstance().searchCourse("Javac", 0, 100);
 
-        for(Course course : courses){
+        /*for(Course course : courses){
             System.out.println(course.getName());
-        }
+        }*/
+        System.out.println((-1)/10);
     }
 }

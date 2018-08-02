@@ -31,7 +31,8 @@ public interface FileUtil {
         List<String> files = new ArrayList<>();
 
         for(File f : fs){
-            files.add(f.getName());
+            if(!f.isDirectory() && !f.getName().startsWith("."))
+                files.add(f.getName());
         }
 
         return files;
@@ -96,7 +97,7 @@ public interface FileUtil {
 
         try {
             for(FileItem fileItem : fileItems){
-                if(!fileItem.isFormField() && fieldName.equals(fileItem.getFieldName())){
+                if(!fileItem.isFormField() && fieldName.equals(fileItem.getFieldName()) && fileItem.getSize() > 0){
                     File storeFile = new File(localDir + File.separator + storeFilename);
                     fileItem.write(storeFile);
                     return true;

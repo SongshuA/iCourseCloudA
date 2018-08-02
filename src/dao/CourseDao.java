@@ -25,7 +25,15 @@ public interface CourseDao {
 
     List<Course> getCourseOrderByTime(int limit);
 
-    List<Course> getCoursesByNameLike(String keyword, int skip, int limit);
+    List<Course> getCoursesByOrderByEngagementByNameLike(String keyword, int skip, int limit);
 
-    List<Course> getCoursesByCreatorNameLike(String keyword, int skip, int limit);
+    List<Course> getCoursesByOrderByEngagementByCreatorNameLike(String keyword, int skip, int limit);
+
+    List<Course> getCoursesByOrderByCreateTimeByNameLike(String keyword, int skip, int limit);
+
+    List<Course> getCoursesByOrderByCreateTimeByCreatorNameLike(String keyword, int skip, int limit);
+
+    int countCoursesByNameLike(String keyword);
+
+    int countCoursesByCreatorNameLike(String keyword);
 }

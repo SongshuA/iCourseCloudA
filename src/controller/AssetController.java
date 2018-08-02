@@ -15,16 +15,16 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URLDecoder;
 
-@WebServlet(name = "Assert", urlPatterns = "/asserts/*")
-public class AssertController extends HttpServlet {
+@WebServlet(name = "Asset", urlPatterns = "/assets/*")
+public class AssetController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String URI = req.getRequestURI();
         URI = URLDecoder.decode(URI, "utf8");
 
-        String prefix = "/asserts/";
+        String prefix = "/assets/";
         String path = URI.substring(URI.indexOf(prefix) + prefix.length());
-        path = String.format("%s/%s", GlobalConfig.assertPath, path);
+        path = String.format("%s/%s", GlobalConfig.assetPath, path);
         String filename = new File(path).getName();
         String contentType = this.getServletContext().getMimeType(path);
         String contentDisposition = "attachment;filename=" + filename;

@@ -21,6 +21,34 @@
 <div class="page-container container">
 
     <div class="row">
+        <div class="col s12">
+            <div class="card">
+                <div class="card-content" style="background-color: #f8f8f8">
+                    <h3>${course.name}</h3>
+                </div>
+                <div class="card-action">
+                    <c:choose>
+                        <c:when test="${isCreator}">
+
+                            <a href="/course?courseId=${course.id}">修改此课程</a>
+
+                        </c:when>
+
+                        <c:otherwise>
+                            <c:choose>
+                                <c:when test="${isSelector}">
+                                    <a href="javascript:service.dropCourse(${course.id});">退课</a>
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="javascript:service.selectCourse(${course.id});">选课</a>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+            </div>
+        </div>
+
         <div class="col s3">
             <div class="collection">
                 <a href="javascript:util.setUrlParam('frame', '0')" class="collection-item<%=frame == 0 ? " active" : ""%>">课程详情</a>
@@ -33,7 +61,7 @@
 
             <c:choose>
 
-                <c:when test="${frame == 0}">
+                <c:when test="${frame eq 0}">
                     <img class="materialboxed" width="100%" src="${cover}">
 
                     <div class="card">
@@ -41,26 +69,16 @@
                             <span class="card-title"><h5>${course.name}</h5></span>
                             <p>${course.description}</p>
                         </div>
-
-
-                        <c:if test="${isCrator == true}">
-
-                            <div class="card-action">
-                                <a href="#">修改此课程</a>
-                            </div>
-
-                        </c:if>
-
                     </div>
                 </c:when>
 
-                <c:when test="${frame == 1}">
+                <c:when test="${frame eq 1 and accessible}">
 
                     <%@ include file="components/chapterList.jsp" %>
 
                 </c:when>
 
-                <c:when test="${frame == 2}">
+                <c:when test="${frame eq 2 and accessible}">
 
                     <ul class="collection with-header">
                         <li class="collection-header"><h4>${course.name} 的资源目录</h4></li>
@@ -75,7 +93,7 @@
 
                 </c:when>
 
-                <c:when test="${frame == 3}">
+                <c:when test="${frame eq 3 and accessible}">
 
                     <ul class="collection with-header">
                         <li class="collection-header"><h4>${course.name} 的作业列表</h4></li>
@@ -90,6 +108,16 @@
                     </ul>
 
                 </c:when>
+
+                <c:otherwise>
+                    <div class="card">
+
+                        <div class="card-content">
+                            抱歉，您还没有访问此资源的权限，请选课后重试
+                        </div>
+
+                    </div>
+                </c:otherwise>
             </c:choose>
 
         </div>

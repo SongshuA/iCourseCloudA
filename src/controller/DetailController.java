@@ -56,8 +56,8 @@ public class DetailController extends HttpServlet {
         Map<Chapter, List<Point>> points;
         List<Homework> homeworks;
         List<String> resources;
-        Boolean isCreator = false;
-        Boolean isSelector = false;
+        boolean isCreator = false;
+        boolean isSelector = false;
 
         try {
             homeworks = homeworkService.getHomework(courseId);
@@ -85,6 +85,8 @@ public class DetailController extends HttpServlet {
             return;
         }
 
+        boolean accessibe = isCreator || isSelector;
+
         req.setAttribute("course", course);
         req.setAttribute("chapters", chapters);
         req.setAttribute("points", points);
@@ -94,6 +96,7 @@ public class DetailController extends HttpServlet {
         req.setAttribute("resources", resources);
         req.setAttribute("isSelector", isSelector);
         req.setAttribute("isCreator", isCreator);
+        req.setAttribute("accessible", accessibe);
         req.setAttribute("frame", frame);
 
         req.getRequestDispatcher("/WEB-INF/pages/detail.jsp").forward(req, resp);

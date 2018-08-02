@@ -3,19 +3,17 @@ package service.impl;
 import config.GlobalConfig;
 import dao.CourseDao;
 import dao.SelectDao;
-import domain.Chapter;
 import domain.Course;
 import domain.Select;
 import domain.User;
-import domain.comparator.CourseIdComparator;
 import exception.ServiceException;
 import service.CourseService;
 import service.UserService;
 import util.FileUtil;
+import util.ServletUtil;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class CourseServiceImpl implements CourseService {
@@ -60,7 +58,7 @@ public class CourseServiceImpl implements CourseService {
         Course course = getCourseById(courseId);
 
         if(user == null)
-            throw new ServiceException("课程对应的选课用户不存在");
+            throw new ServiceException("您还没有登录");
 
         if(course == null)
             throw new ServiceException("课程不存在");
@@ -69,7 +67,7 @@ public class CourseServiceImpl implements CourseService {
             throw new ServiceException("不能选择自己开设的课程");
 
         if(getSelectedCourses(username).contains(course))
-            throw new ServiceException("该用户已经选择此课程");
+            throw new ServiceException("您已经选择此课程");
 
         selectDao.create(new Select(0, user, course));
     }
@@ -95,12 +93,12 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public String getResourceFolderURL(int courseId) {
-        return String.format("/asserts/course/%d/resource/", courseId);
+        return String.format("/assets/course/%d/resource/", courseId);
     }
 
     @Override
     public String getResourceFolderLocalPath(int courseId) {
-        return String.format("%s/course/%d/resource", GlobalConfig.assertPath, courseId);
+        return String.format("%s/course/%d/resource", GlobalConfig.assetPath, courseId);
     }
 
     @Override
@@ -111,7 +109,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public String getCoverURL(int courseId) {
         String localPath = getCoverLocalPath(courseId);
-        String url = String.format("/asserts/course/%d/cover", courseId);
+        String url = String.format("/assets/course/%d/cover", courseId);
 
         File file = new File(localPath);
 
@@ -123,7 +121,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public String getCoverLocalPath(int courseId) {
-        return String.format("%s/course/%d/cover", GlobalConfig.assertPath, courseId);
+        return String.format("%s/course/%d/cover", GlobalConfig.assetPath, courseId);
     }
 
 
@@ -176,26 +174,32 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<Course> searchCourseByNameOrderByEngagement(String keyword, int skip, int limit) {
-        return courseDao.getCoursesByNameLike(keyword, skip, limit);
+        return courseDao.getCoursesByOrderByEngagementByNameLike(keyword, skip, limit);
     }
 
     @Override
     public List<Course> searchCourseByCreatorNameOrderByEngagement(String keyword, int skip, int limit) {
-        return courseDao.getCoursesByCreatorNameLike(keyword, skip, limit);
+        return courseDao.getCoursesByOrderByEngagementByCreatorNameLike(keyword, skip, limit);
     }
 
     @Override
     public List<Course> searchCourseByNameOrderByCreateTime(String keyword, int skip, int limit) {
-        List<Course> courses = courseDao.getCoursesByNameLike(keyword, skip, limit);
-        courses.sort(new CourseIdComparator());
-        return courses;
+        return courseDao.getCoursesByOrderByCreateTimeByNameLike(keyword, skip, limit);
     }
 
     @Override
     public List<Course> searchCourseByCreatorNameOrderByCreateTime(String keyword, int skip, int limit) {
-        List<Course> courses = courseDao.getCoursesByCreatorNameLike(keyword, skip, limit);
-        courses.sort(new CourseIdComparator());
-        return courses;
+        return courseDao.getCoursesByOrderByCreateTimeByCreatorNameLike(keyword, skip, limit);
+    }
+
+    @Override
+    public int getSearchCountByName(String keyword) {
+        return courseDao.countCoursesByNameLike(keyword);
+    }
+
+    @Override
+    public int getSearchCountByCreatorName(String keyword) {
+        return courseDao.countCoursesByCreatorNameLike(keyword);
     }
 
     @Override
@@ -206,5 +210,23 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<Course> getCourseOrderByCreateTime(int limit) {
         return courseDao.getCourseOrderByTime(limit);
+    }
+
+    @Override
+    public void checkUpdatePrivilege(String username, int courseId) throws ServiceException {
+        User creator = UserService.getInstance().queryUser(username);
+        if(creator == null)
+            throw new ServiceException("您尚未登录");
+
+        Course course = getCourseById(courseId);
+
+        if(course == null)
+            throw new ServiceException("未能找到对应课程");
+
+        List<Course> createdCourses = getCreatedCourses(username);
+
+        if(createdCourses == null || !createdCourses.contains(course)){
+            throw new ServiceException("您无权修改此课程");
+        }
     }
 }

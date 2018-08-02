@@ -3,7 +3,8 @@ $(document).ready(function () {
    $(".dropdown-trigger").dropdown();
    $('.carousel').carousel();
    $('.materialboxed').materialbox();
-    $('.collapsible').collapsible();
+   $('.collapsible').collapsible();
+   $('select').formSelect();
 });
 
 $(window).resize(function () {
@@ -70,13 +71,6 @@ var util = {
         }
     },
 
-    logout: function () {
-        $.get('/logout', function () {
-            window.location.reload();
-        });
-
-    },
-
     setUrlParam: function (key, value) {
         var url = window.location.href;
         var i = url.indexOf('#');
@@ -98,5 +92,33 @@ var util = {
                 window.location.href = url+'?'+replaceText;
             }
         }
+    },
+
+    logout: function () {
+        $.get('/logout', function () {
+            window.location.reload();
+        });
+
+    }
+};
+
+
+var service = {
+    selectCourse: function(courseId){
+        $.post('/select', {
+            courseId: courseId
+        }, function(data){
+           alert(data.message);
+           window.location.reload();
+        });
+    },
+
+    dropCourse: function (courseId) {
+        $.post('/drop', {
+            courseId: courseId
+        }, function(data){
+            alert(data.message);
+            window.location.reload();
+        });
     }
 };

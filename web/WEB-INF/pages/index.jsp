@@ -1,3 +1,5 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ page import="config.GlobalConfig" %>
 <%@ page import="domain.Course" %>
 <%@ page import="java.util.List" %>
@@ -16,26 +18,17 @@
 <jsp:include page="components/navbar.jsp" />
 
 
-<%
-    List<Course> hotCourses = (List<Course>)request.getAttribute("hottest");
-
-    List<Course> newCourses = (List<Course>) request.getAttribute("newest");
-
-%>
-
 <div class="carousel carousel-slider center">
 
-    <% for(Course course : hotCourses){ %>
-
+    <c:forEach items="${hotCourses}" var="course">
         <div class="carousel-item cover-display white-text"
-             style="background-image: url('<%=CourseService.getInstance().getCoverURL(course.getId())%>')">
-            <a href="${pageContext.request.contextPath}/detail?courseId=<%=course.getId()%>">
-                <h2 class="text-shadow white-text"><%=course.getName()%></h2>
-                <p class="text-shadow white-text"><%=course.getDescription()%></p>
+             style="background-image: url('${covers[course]}')">
+            <a href="${pageContext.request.contextPath}/detail?courseId=${course.id}">
+                <h2 class="text-shadow white-text">${course.name}</h2>
+                <p class="text-shadow white-text">${course.description}</p>
             </a>
         </div>
-
-    <% } %>
+    </c:forEach>
 </div>
 
 
@@ -43,24 +36,21 @@
 
     <div class="row s12">
 
-        <% for(Course course : newCourses){ %>
-
+        <c:forEach items="${newCourses}" var="course">
             <div class="col s6">
                 <div class="card">
-                    <div class="card-image">
-                        <img src="<%=CourseService.getInstance().getCoverURL(course.getId())%>">
-                        <span class="card-title"><%=course.getName()%></span>
-                    </div>
+                    <div class="thumbnail" style="background-image: url('${covers[course]}');"></div>
                     <div class="card-content">
-                        <p><%=course.getDescription()%></p>
+                        <h5>${course.name}</h5>
+                        <p>${course.description}</p>
                     </div>
                     <div class="card-action">
-                        <a href="${pageContext.request.contextPath}/detail?courseId=<%=course.getId()%>">查看详情</a>
+                        <a href="${pageContext.request.contextPath}/detail?courseId=${course.id}">查看详情</a>
                     </div>
                 </div>
             </div>
+        </c:forEach>
 
-        <% } %>
     </div>
 
 </div>

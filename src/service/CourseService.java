@@ -137,7 +137,13 @@ public interface CourseService {
 
     List<Course> searchCourseByCreatorNameOrderByCreateTime(String keyword, int skip, int limit);
 
+    int getSearchCountByName(String keyword);
+
+    int getSearchCountByCreatorName(String keyword);
+
     List<Course> getCourseOrderByEngagement(int limit);
 
     List<Course> getCourseOrderByCreateTime(int limit);
+
+    void checkUpdatePrivilege(String username , int courseId) throws ServiceException;
 }

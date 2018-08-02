@@ -21,3 +21,11 @@ body {
     color: #9e391f;
     display: none;
 }
+
+div.thumbnail{
+    width: 100%;
+    height: 300px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}

@@ -49,8 +49,8 @@
 
 <!-- Dropdown Structure -->
 <ul id="user-menu" class="dropdown-content">
-    <li><a href="${pageContext.request.contextPath}/user/course">我开的课</a></li>
-    <li><a href="${pageContext.request.contextPath}/user/select">我选的课</a></li>
+    <li><a href="${pageContext.request.contextPath}/personal?frame=0">我开的课</a></li>
+    <li><a href="${pageContext.request.contextPath}/personal?frame=1">我选的课</a></li>
     <li class="divider"></li>
     <li><a href="javascript:util.logout()">退出登录</a></li>
 </ul>
@@ -63,7 +63,6 @@
         </a>
         <ul class="left hide-on-med-and-down">
             <li><a href="${pageContext.request.contextPath}/">首页</a></li>
-            <li><a href="${pageContext.request.contextPath}/course">课程</a></li>
             <li><a href="${pageContext.request.contextPath}/search">搜索</a></li>
         </ul>
 
